@@ -1,4 +1,4 @@
-package com.consert.showmetheconsert.service;
+package com.consert.showmetheconsert.schedule;
 
 import com.consert.showmetheconsert.conf.GlobalVar;
 import com.consert.showmetheconsert.util.TimeUtil;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class SearchDaeguConcertHouse {
+public class SearchDaeguConcertSchedule {
 
   private static final String RETURN_BTN = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[1]/ul/li[3]/a";
   private static final String COMPARE_STR = "javascript:fn_view('SC";
