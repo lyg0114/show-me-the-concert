@@ -1,6 +1,7 @@
 package com.consert.showmetheconsert.service;
 
 import com.consert.showmetheconsert.conf.GlobalVar;
+import com.consert.showmetheconsert.util.TimeUtil;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -38,9 +39,9 @@ public class SearchDaeguConcertHouse {
     for (String target : targets) {
       jsDriver.executeScript(target);
       extractData();
-      sleep(1000);
+      TimeUtil.sleep(1000);
       driver.findElement(By.xpath(RETURN_BTN)).click();
-      sleep(1000);
+      TimeUtil.sleep(1000);
     }
   }
 
@@ -55,13 +56,5 @@ public class SearchDaeguConcertHouse {
   }
 
   private void extractData() {
-  }
-
-  private void sleep(long sec) {
-    try {
-      Thread.sleep(sec);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
   }
 }
