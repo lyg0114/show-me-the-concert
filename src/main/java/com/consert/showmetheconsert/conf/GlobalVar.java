@@ -18,4 +18,8 @@ public class GlobalVar {
   public static String DRIVER_NAME = "webdriver.chrome.driver";
   public static String RESOURCE_PATH = "/Users/iyeong-gyo/Desktop/study/cicd-study/show-me-the-consert/src/main/resources";
   public static String DRIVER_PATH = RESOURCE_PATH + "/chromedriver";
+
+  @Value("${daeguConcertHouse.url}")
+  private String daeguConcertHouseUrl;
+
 }
