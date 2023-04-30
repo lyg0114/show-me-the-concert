@@ -56,5 +56,6 @@ public class SearchDaeguConcertSchedule {
   }
 
   private void extractData() {
+
   }
 }

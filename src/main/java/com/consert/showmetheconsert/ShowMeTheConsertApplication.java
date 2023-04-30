@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class ShowMeTheConsertApplication {
-
   public static void main(String[] args) {
     System.setProperty(GlobalVar.DRIVER_NAME, GlobalVar.DRIVER_PATH);
     SpringApplication.run(ShowMeTheConsertApplication.class, args)
