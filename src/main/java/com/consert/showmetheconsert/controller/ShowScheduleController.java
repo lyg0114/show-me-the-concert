@@ -16,7 +16,7 @@ public class ShowScheduleController {
   private static final String VIEWS_CONCERT_SCUEDULE = "schedule/showSchedule";
 
   @GetMapping("")
-  public String initCreationForm() {
+  public String showSchedule() {
     return VIEWS_CONCERT_SCUEDULE;
   }
 }
