@@ -1,5 +1,8 @@
 package com.consert.showmetheconsert.util;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * @author : iyeong-gyo
  * @package : com.consert.showmetheconsert.util
@@ -13,5 +16,10 @@ public class TimeUtil {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
+  }
+
+  public static LocalDateTime convertToLocalDateTime(String dateTimeStr) {
+    return LocalDateTime
+        .parse(dateTimeStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
   }
 }
