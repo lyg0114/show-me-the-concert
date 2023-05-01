@@ -34,6 +34,9 @@ public class ConcertInfo extends BaseEntity {
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
   private LocalDateTime concertDateTime;
 
+  @Column(name = "CONCERT_HALL_TAG")
+  private String concertHallTag;
+
   @Override
   public String toString() {
     return "ConcertInfo{" +

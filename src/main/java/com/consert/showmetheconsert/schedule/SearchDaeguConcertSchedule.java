@@ -72,6 +72,7 @@ public class SearchDaeguConcertSchedule {
         .title(driver.findElement(By.xpath(CONCERT_TITLE_XPATH)).getText())
         .place(driver.findElement(By.xpath(CONCERT_PLACE_XPATH)).getText())
         .concertDateTime(calculateConcertDate())
+        .concertHallTag("TAG-1")
         .build();
     concertInfoRepo.save(info);
     log.info(info.toString());
