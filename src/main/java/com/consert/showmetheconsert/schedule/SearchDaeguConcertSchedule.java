@@ -2,6 +2,7 @@ package com.consert.showmetheconsert.schedule;
 
 import com.consert.showmetheconsert.conf.GlobalVar;
 import com.consert.showmetheconsert.model.entity.ConcertInfo;
+import com.consert.showmetheconsert.repository.ConcertInfoRepository;
 import com.consert.showmetheconsert.util.TimeUtil;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class SearchDaeguConcertSchedule {
 
   private final GlobalVar global;
   private final WebDriver driver;
+  private final ConcertInfoRepository concertInfoRepo;
 
   public void searchData() {
     driver.get(global.getDaeguConcertHouseUrl());
@@ -54,6 +56,7 @@ public class SearchDaeguConcertSchedule {
   private void extracted(List<String> targets) {
     JavascriptExecutor jsDriver = (JavascriptExecutor) driver;
     ArrayList<ConcertInfo> concertInfos = new ArrayList<>();
+
     for (String target : targets) {
       jsDriver.executeScript(target);
       extractData(concertInfos);
@@ -73,19 +76,11 @@ public class SearchDaeguConcertSchedule {
   }
 
   private LocalDateTime calculateConcertDate() {
-    WebElement elDate = driver.findElement(By.xpath(CONCERT_DATE_XPATH));
-    String dateStr = elDate.getText();
-    WebElement elTime = driver.findElement(By.xpath(CONCERT_TIME_XPATH));
-    String timeStr = elTime.getText();
-    return TimeUtil.convertToLocalDateTime(concatDateInfo(dateStr, timeStr));
-  }
-
-  private String concatDateInfo(String dateStr, String timeStr) {
     StringBuilder sb = new StringBuilder();
-    sb.append(dateStr);
+    sb.append(driver.findElement(By.xpath(CONCERT_DATE_XPATH)).getText());
     sb.append(" ");
-    sb.append(timeStr);
-    return sb.toString();
+    sb.append(driver.findElement(By.xpath(CONCERT_TIME_XPATH)).getText());
+    return TimeUtil.convertToLocalDateTime(sb.toString());
   }
 }
 
