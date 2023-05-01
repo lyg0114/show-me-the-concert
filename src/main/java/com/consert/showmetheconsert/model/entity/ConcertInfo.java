@@ -21,6 +21,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "CONCERT_INFO")
 public class ConcertInfo extends BaseEntity {
 
+  @Column(name = "SHOW_ID")
+  private String showId;
+
   @Column(name = "PLACE")
   private String place;
 
@@ -40,10 +43,12 @@ public class ConcertInfo extends BaseEntity {
   @Override
   public String toString() {
     return "ConcertInfo{" +
-        "place='" + place + '\'' +
+        "showId='" + showId + '\'' +
+        ", place='" + place + '\'' +
         ", title='" + title + '\'' +
         ", url='" + url + '\'' +
         ", concertDateTime=" + concertDateTime +
+        ", concertHallTag='" + concertHallTag + '\'' +
         '}';
   }
 }
