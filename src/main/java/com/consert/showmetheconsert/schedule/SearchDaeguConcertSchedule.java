@@ -22,8 +22,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class SearchDaeguConcertSchedule {
 
-  private static final String RETURN_BTN = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[1]/ul/li[3]/a";
+  private static final String RETURN_BTN_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[1]/ul/li[3]/a";
   private static final String COMPARE_STR = "javascript:fn_view('SC";
+  private static final String CONCERT_TITLE_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/strong";
+  private static final String CONCERT_PLACE_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/ul/li[1]/div";
+  private static final String CONCERT_DATE_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/ul/li[2]/div";
+  private static final String CONCERT_TIME_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/ul/li[3]/div";
+
   private final GlobalVar global;
   private final WebDriver driver;
 
@@ -40,7 +45,7 @@ public class SearchDaeguConcertSchedule {
       jsDriver.executeScript(target);
       extractData();
       TimeUtil.sleep(1000);
-      driver.findElement(By.xpath(RETURN_BTN)).click();
+      driver.findElement(By.xpath(RETURN_BTN_XPATH)).click();
       TimeUtil.sleep(1000);
     }
   }
@@ -56,6 +61,41 @@ public class SearchDaeguConcertSchedule {
   }
 
   private void extractData() {
+    String currentUrl = driver.getCurrentUrl();
+    System.out.println("currentUrl = " + currentUrl);
 
+    WebElement elTitle = driver.findElement(By.xpath(CONCERT_TITLE_XPATH));
+    String titleText = elTitle.getText();
+    System.out.println("titleText = " + titleText);
+
+    WebElement elPlace = driver.findElement(By.xpath(CONCERT_PLACE_XPATH));
+    String place = elPlace.getText();
+    System.out.println("place = " + place);
+
+    WebElement elDate = driver.findElement(By.xpath(CONCERT_DATE_XPATH));
+    String dateStr = elDate.getText();
+    System.out.println("dateStr = " + dateStr);
+
+    WebElement elTime = driver.findElement(By.xpath(CONCERT_TIME_XPATH));
+    String timeStr = elTime.getText();
+    System.out.println("timeStr = " + timeStr);
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

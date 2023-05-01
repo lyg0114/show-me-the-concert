@@ -27,6 +27,8 @@ public class ShowMeTheConsertApplication {
   @Bean
   public ChromeOptions chromeOptions() {
     return new ChromeOptions()
-        .addArguments("--remote-allow-origins=*");
+        .addArguments("--remote-allow-origins=*")
+        .setHeadless(true)
+        ;
   }
 }
