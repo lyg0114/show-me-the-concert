@@ -14,6 +14,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author : iyeong-gyo
@@ -55,24 +56,25 @@ public class SearchDaeguConcertSchedule {
 
   private void extracted(List<String> targets) {
     JavascriptExecutor jsDriver = (JavascriptExecutor) driver;
-    List<ConcertInfo> concertInfos = new ArrayList<>();
     for (int i = 0; i < targets.size(); i++) {
       jsDriver.executeScript(targets.get(i));
-      extractData(concertInfos);
+      extractData();
       TimeUtil.sleep(1000);
       driver.findElement(By.xpath(RETURN_BTN_XPATH)).click();
       TimeUtil.sleep(1000);
     }
-    concertInfoRepo.saveAll(concertInfos);
   }
 
-  private void extractData(List<ConcertInfo> concertInfos) {
-    concertInfos.add(ConcertInfo.builder()
+  @Transactional
+  protected void extractData() {
+    ConcertInfo info = ConcertInfo.builder()
         .url(driver.getCurrentUrl())
         .title(driver.findElement(By.xpath(CONCERT_TITLE_XPATH)).getText())
         .place(driver.findElement(By.xpath(CONCERT_PLACE_XPATH)).getText())
         .concertDateTime(calculateConcertDate())
-        .build());
+        .build();
+    concertInfoRepo.save(info);
+    log.info(info.toString());
   }
 
   private LocalDateTime calculateConcertDate() {
