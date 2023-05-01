@@ -55,7 +55,7 @@ public class SearchDaeguConcertSchedule {
 
   private void extracted(List<String> targets) {
     JavascriptExecutor jsDriver = (JavascriptExecutor) driver;
-    ArrayList<ConcertInfo> concertInfos = new ArrayList<>();
+    List<ConcertInfo> concertInfos = new ArrayList<>();
     for (int i = 0; i < targets.size(); i++) {
       jsDriver.executeScript(targets.get(i));
       extractData(concertInfos);
@@ -63,9 +63,10 @@ public class SearchDaeguConcertSchedule {
       driver.findElement(By.xpath(RETURN_BTN_XPATH)).click();
       TimeUtil.sleep(1000);
     }
+    concertInfoRepo.saveAll(concertInfos);
   }
 
-  private void extractData(ArrayList<ConcertInfo> concertInfos) {
+  private void extractData(List<ConcertInfo> concertInfos) {
     concertInfos.add(ConcertInfo.builder()
         .url(driver.getCurrentUrl())
         .title(driver.findElement(By.xpath(CONCERT_TITLE_XPATH)).getText())
