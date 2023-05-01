@@ -28,7 +28,7 @@ public class ShowMeTheConsertApplication {
   public ChromeOptions chromeOptions() {
     return new ChromeOptions()
         .addArguments("--remote-allow-origins=*")
-        .setHeadless(true)
+        .setHeadless(false)
         ;
   }
 }
