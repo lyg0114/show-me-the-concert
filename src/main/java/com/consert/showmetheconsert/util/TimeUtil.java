@@ -1,5 +1,6 @@
 package com.consert.showmetheconsert.util;
 
+import com.consert.showmetheconsert.conf.GlobalVar;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -20,6 +21,6 @@ public class TimeUtil {
 
   public static LocalDateTime convertToLocalDateTime(String dateTimeStr) {
     return LocalDateTime
-        .parse(dateTimeStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        .parse(dateTimeStr, DateTimeFormatter.ofPattern(GlobalVar.DATE_TIME_FORMAT));
   }
 }

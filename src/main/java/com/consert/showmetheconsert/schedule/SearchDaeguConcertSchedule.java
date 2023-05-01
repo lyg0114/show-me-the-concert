@@ -1,6 +1,7 @@
 package com.consert.showmetheconsert.schedule;
 
 import com.consert.showmetheconsert.conf.GlobalVar;
+import com.consert.showmetheconsert.model.entity.ConcertInfo;
 import com.consert.showmetheconsert.util.TimeUtil;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -40,17 +41,6 @@ public class SearchDaeguConcertSchedule {
     extracted(targets);
   }
 
-  private void extracted(List<String> targets) {
-    JavascriptExecutor jsDriver = (JavascriptExecutor) driver;
-    for (String target : targets) {
-      jsDriver.executeScript(target);
-      extractData();
-      TimeUtil.sleep(1000);
-      driver.findElement(By.xpath(RETURN_BTN_XPATH)).click();
-      TimeUtil.sleep(1000);
-    }
-  }
-
   private void extractTargestHref(List<String> targets) {
     List<WebElement> links = driver.findElements(By.tagName("a"));
     links.forEach(l -> {
@@ -61,28 +51,33 @@ public class SearchDaeguConcertSchedule {
     });
   }
 
-  private void extractData() {
-    String currentUrl = driver.getCurrentUrl();
-    System.out.println("currentUrl = " + currentUrl);
+  private void extracted(List<String> targets) {
+    JavascriptExecutor jsDriver = (JavascriptExecutor) driver;
+    ArrayList<ConcertInfo> concertInfos = new ArrayList<>();
+    for (String target : targets) {
+      jsDriver.executeScript(target);
+      extractData(concertInfos);
+      TimeUtil.sleep(1000);
+      driver.findElement(By.xpath(RETURN_BTN_XPATH)).click();
+      TimeUtil.sleep(1000);
+    }
+  }
 
-    WebElement elTitle = driver.findElement(By.xpath(CONCERT_TITLE_XPATH));
-    String titleText = elTitle.getText();
-    System.out.println("titleText = " + titleText);
+  private void extractData(ArrayList<ConcertInfo> concertInfos) {
+    concertInfos.add(ConcertInfo.builder()
+        .url(driver.getCurrentUrl())
+        .title(driver.findElement(By.xpath(CONCERT_TITLE_XPATH)).getText())
+        .place(driver.findElement(By.xpath(CONCERT_PLACE_XPATH)).getText())
+        .concertDateTime(calculateConcertDate())
+        .build());
+  }
 
-    WebElement elPlace = driver.findElement(By.xpath(CONCERT_PLACE_XPATH));
-    String place = elPlace.getText();
-    System.out.println("place = " + place);
-
+  private LocalDateTime calculateConcertDate() {
     WebElement elDate = driver.findElement(By.xpath(CONCERT_DATE_XPATH));
     String dateStr = elDate.getText();
-    System.out.println("dateStr = " + dateStr);
     WebElement elTime = driver.findElement(By.xpath(CONCERT_TIME_XPATH));
     String timeStr = elTime.getText();
-    System.out.println("timeStr = " + timeStr);
-
-    LocalDateTime localDateTime = TimeUtil.convertToLocalDateTime(concatDateInfo(dateStr, timeStr));
-    System.out.println("localDateTime = " + localDateTime);
-
+    return TimeUtil.convertToLocalDateTime(concatDateInfo(dateStr, timeStr));
   }
 
   private String concatDateInfo(String dateStr, String timeStr) {
@@ -93,21 +88,4 @@ public class SearchDaeguConcertSchedule {
     return sb.toString();
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

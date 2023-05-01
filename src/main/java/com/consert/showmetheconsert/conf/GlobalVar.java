@@ -19,6 +19,8 @@ public class GlobalVar {
   public static String RESOURCE_PATH = "/Users/iyeong-gyo/Desktop/study/cicd-study/show-me-the-consert/src/main/resources";
   public static String DRIVER_PATH = RESOURCE_PATH + "/chromedriver";
 
+  public static String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm";
+
   @Value("${daeguConcertHouse.url}")
   private String daeguConcertHouseUrl;
 
