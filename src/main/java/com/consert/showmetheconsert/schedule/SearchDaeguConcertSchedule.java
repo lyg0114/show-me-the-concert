@@ -2,6 +2,7 @@ package com.consert.showmetheconsert.schedule;
 
 import com.consert.showmetheconsert.conf.GlobalVar;
 import com.consert.showmetheconsert.util.TimeUtil;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -75,10 +76,21 @@ public class SearchDaeguConcertSchedule {
     WebElement elDate = driver.findElement(By.xpath(CONCERT_DATE_XPATH));
     String dateStr = elDate.getText();
     System.out.println("dateStr = " + dateStr);
-
     WebElement elTime = driver.findElement(By.xpath(CONCERT_TIME_XPATH));
     String timeStr = elTime.getText();
     System.out.println("timeStr = " + timeStr);
+
+    LocalDateTime localDateTime = TimeUtil.convertToLocalDateTime(concatDateInfo(dateStr, timeStr));
+    System.out.println("localDateTime = " + localDateTime);
+
+  }
+
+  private String concatDateInfo(String dateStr, String timeStr) {
+    StringBuilder sb = new StringBuilder();
+    sb.append(dateStr);
+    sb.append(" ");
+    sb.append(timeStr);
+    return sb.toString();
   }
 }
 
