@@ -17,20 +17,12 @@ public class CalendarDay {
     this.date = date;
   }
 
-  public String getNumber() {
+  public String getDay() {
     if (date != null) {
       return String.valueOf(date.getDayOfMonth());
-    }else {
+    } else {
       return "";
     }
-  }
-
-  public LocalDate getDate() {
-    return date;
-  }
-
-  public void setDate(LocalDate date) {
-    this.date = date;
   }
 
   public List<CalendarSlot> getSlots() {
