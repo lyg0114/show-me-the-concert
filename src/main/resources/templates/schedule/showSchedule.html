@@ -1,12 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Calendar</title>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-
-HELLO CONSERT
-
+<div class="container">
+  <h1 class="text-center">Calendar</h1>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Sun</th>
+      <th>Mon</th>
+      <th>Tue</th>
+      <th>Wed</th>
+      <th>Thu</th>
+      <th>Fri</th>
+      <th>Sat</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="week : ${calendar}">
+      <td th:each="day : ${week}" th:class="${day != null} ? ${day.getClasses()} : 'text-center'"
+          th:text="${day != null} ? ${day.getNumber()} : ''">
+        <div>HELLO</div>
+        <div>HELLO</div>
+        <div>HELLO</div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 </body>
 </html>
