@@ -1,7 +1,10 @@
 package com.consert.showmetheconsert.controller;
 
 import com.consert.showmetheconsert.util.CalendarDay;
+import com.consert.showmetheconsert.util.CalendarSlot;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,37 +26,42 @@ public class ShowScheduleController {
 
   @GetMapping("")
   public String showSchedule(Model model) {
+    LocalDate startDate = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
+    LocalDate endDate = startDate.plusMonths(1).minusDays(1);
 
-    LocalDate now = LocalDate.now();
-
-    int year = now.getYear();
-    int month = now.getMonthValue();
-    int day = now.getDayOfMonth();
-
-    LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
-    LocalDate lastDayOfMonth = firstDayOfMonth.with(TemporalAdjusters.lastDayOfMonth());
-
-    List<List<CalendarDay>> calendar = new ArrayList<>();
-    List<CalendarDay> week = new ArrayList<>();
-    int dayOfWeek = firstDayOfMonth.getDayOfWeek().getValue() % 7;
-    for (int i = 0; i < dayOfWeek; i++) {
-      week.add(null);
+    List<DayOfWeek> daysOfWeek = new ArrayList<>();
+    for (int i = 0; i < 7; i++) {
+      daysOfWeek.add(startDate.plusDays(i).getDayOfWeek());
     }
-    for (LocalDate date = firstDayOfMonth; !date.isAfter(lastDayOfMonth); date = date.plusDays(1)) {
-      if (week.size() == 7) {
-        calendar.add(week);
-        week = new ArrayList<>();
+
+    List<List<CalendarDay>> rows = new ArrayList<>();
+    LocalDate currentDate = startDate;
+    while (!currentDate.isAfter(endDate)) {
+      List<CalendarDay> row = new ArrayList<>();
+      for (int i = 0; i < 7; i++) {
+        if (currentDate.isAfter(endDate)) {
+          row.add(new CalendarDay(null));
+        } else {
+          CalendarDay day = new CalendarDay(currentDate);
+          List<CalendarSlot> slots = new ArrayList<>();
+          for (int j = 0; j <= 23; j++) {
+            for (int k = 0; k < 2; k++) {
+              LocalTime startTime = LocalTime.of(j, k * 30);
+              LocalTime endTime = startTime.plusMinutes(30);
+              CalendarSlot slot = new CalendarSlot(startTime, endTime);
+              slots.add(slot);
+            }
+          }
+          day.setSlots(slots);
+          row.add(day);
+        }
+        currentDate = currentDate.plusDays(1);
       }
-      week.add(new CalendarDay(date.getDayOfMonth(), date.getMonthValue() == month));
-    }
-    if (week.size() < 7) {
-      for (int i = week.size(); i < 7; i++) {
-        week.add(null);
-      }
-      calendar.add(week);
+      rows.add(row);
     }
 
-    model.addAttribute("calendar", calendar);
+    model.addAttribute("daysOfWeek", daysOfWeek);
+    model.addAttribute("calendar", rows);
 
     return VIEWS_CONCERT_SCUEDULE;
   }

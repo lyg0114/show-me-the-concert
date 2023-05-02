@@ -1,6 +1,7 @@
 package com.consert.showmetheconsert.util;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author : iyeong-gyo
@@ -9,30 +10,34 @@ import java.time.LocalDate;
  */
 public class CalendarDay {
 
-  private Integer number;
-  private boolean currentMonth;
+  private LocalDate date;
+  private List<CalendarSlot> slots;
 
-  public CalendarDay(Integer number, boolean currentMonth) {
-    this.number = number;
-    this.currentMonth = currentMonth;
+  public CalendarDay(LocalDate date) {
+    this.date = date;
   }
 
-  public int getNumber() {
-    return number;
-  }
-
-  public boolean isCurrentMonth() {
-    return currentMonth;
-  }
-
-  public String getClasses() {
-    String classes = "text-center";
-    if (!currentMonth) {
-      classes += " other-month";
+  public String getNumber() {
+    if (date != null) {
+      return String.valueOf(date.getDayOfMonth());
+    }else {
+      return "";
     }
-    if (number == LocalDate.now().getDayOfMonth()) {
-      classes += " today";
-    }
-    return classes;
+  }
+
+  public LocalDate getDate() {
+    return date;
+  }
+
+  public void setDate(LocalDate date) {
+    this.date = date;
+  }
+
+  public List<CalendarSlot> getSlots() {
+    return slots;
+  }
+
+  public void setSlots(List<CalendarSlot> slots) {
+    this.slots = slots;
   }
 }
