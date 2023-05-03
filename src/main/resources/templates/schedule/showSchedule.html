@@ -29,9 +29,11 @@
     <tr th:each="week : ${calendar}">
       <td th:each="day : ${week}" th:class="'text-center'">
         <div th:text="${day != null} ? ${day.getDay()} : ''"></div>
-        <div th:each="time : ${day.getSlots()}"
-             th:class="${time} == '00:00' ? 'time-slot' : 'time-slot border-left'"
-             th:text="${time.getStartTimeInfo()}"></div>
+
+        <div th:each="time : ${day.getSlots()}">
+          <div th:text="${time.getStartTimeInfo()}"></div>
+
+        </div>
       </td>
     </tr>
     </tbody>
