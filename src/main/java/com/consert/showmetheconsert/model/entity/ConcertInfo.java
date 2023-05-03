@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,6 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @package : com.consert.showmetheconsert.model.entity
  * @since : 2023/05/01
  */
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
