@@ -37,7 +37,7 @@ class MakeCalendarServiceTest {
         List<CalendarSlot> slots = day.getSlots();
         if(slots.size() > 0){
           for (CalendarSlot slot : slots) {
-            System.out.println("slot.getStartTimeInfo() = " + slot.getStartTimeInfo());
+            System.out.println("slot.getCurrentConcertDateTime() = " + slot.getCurrentConcertDateTime());
             List<ConcertInfo> concertInfos = slot.getConcertInfos();
             for (ConcertInfo concertInfo : concertInfos) {
               System.out.println("concertInfo = " + concertInfo);
@@ -47,5 +47,6 @@ class MakeCalendarServiceTest {
       }
     }
   }
+
 }
 
