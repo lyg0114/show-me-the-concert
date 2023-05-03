@@ -41,13 +41,17 @@ public class ShowMeTheConsertApplication {
   public CommandLineRunner sampleData(ConcertInfoRepository repository) {
     return (args) -> {
       repository.save(ConcertInfo.builder().showId("show-1").place("place-1").title("title-1")
-          .url("https://example1.com").concertDateTime(LocalDateTime.now()).concertHallTag("Tag-1")
-          .build());
+          .url("https://example1.com").concertHallTag("Tag-1")
+          .concertDateTime(LocalDateTime.of(2023, 5, 3, 13, 0))
+          .build()
+      );
       repository.save(ConcertInfo.builder().showId("show-2").place("place-2").title("title-2")
-          .url("https://example2.com").concertDateTime(LocalDateTime.now()).concertHallTag("Tag-1")
+          .url("https://example2.com").concertHallTag("Tag-1")
+          .concertDateTime(LocalDateTime.of(2023, 5, 17, 17, 0))
           .build());
       repository.save(ConcertInfo.builder().showId("show-3").place("place-3").title("title-3")
-          .url("https://example3.com").concertDateTime(LocalDateTime.now()).concertHallTag("Tag-1")
+          .url("https://example3.com").concertHallTag("Tag-1")
+          .concertDateTime(LocalDateTime.of(2023, 5, 24, 18, 30))
           .build());
     };
   }
