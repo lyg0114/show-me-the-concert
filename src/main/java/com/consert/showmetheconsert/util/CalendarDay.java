@@ -1,6 +1,7 @@
 package com.consert.showmetheconsert.util;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +27,11 @@ public class CalendarDay {
   }
 
   public List<CalendarSlot> getSlots() {
-    return slots;
+    if (slots == null || slots.size() == 0) {
+      return new ArrayList<>();
+    } else {
+      return slots;
+    }
   }
 
   public void setSlots(List<CalendarSlot> slots) {
