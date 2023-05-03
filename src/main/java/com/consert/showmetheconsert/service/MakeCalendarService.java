@@ -42,6 +42,7 @@ public class MakeCalendarService {
     List<List<CalendarDay>> calendarRows = new ArrayList<>();
     makeBasicCalendar(calendarRows);
     asignConcertInfos(concertInfos, calendarRows);
+    cleanTable(calendarRows);
 
     return calendarRows;
   }
@@ -72,8 +73,7 @@ public class MakeCalendarService {
     }
   }
 
-  private void asignConcertInfos(List<ConcertInfo> concertInfos,
-      List<List<CalendarDay>> calendarRows) {
+  private void asignConcertInfos(List<ConcertInfo> concertInfos, List<List<CalendarDay>> calendarRows) {
     for (List<CalendarDay> calendarRow : calendarRows) {
       for (CalendarDay calendarDay : calendarRow) {
         for (CalendarSlot slot : calendarDay.getSlots()) {
@@ -83,6 +83,14 @@ public class MakeCalendarService {
                   concertInfo -> concertInfo.getConcertDateTime().equals(currentConcertDateTime))
               .forEach(slot::addInfo);
         }
+      }
+    }
+  }
+
+  private void cleanTable(List<List<CalendarDay>> calendarRows) {
+    for (List<CalendarDay> calendarRow : calendarRows) {
+      for (CalendarDay calendarDay : calendarRow) {
+        calendarDay.getSlots().removeIf(slot -> slot.getConcertInfos().isEmpty());
       }
     }
   }
