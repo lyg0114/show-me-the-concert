@@ -33,7 +33,7 @@ public class ShowMeTheConsertApplication {
   public ChromeOptions chromeOptions() {
     return new ChromeOptions()
         .addArguments("--remote-allow-origins=*")
-        .setHeadless(false)
+        .setHeadless(true)
         ;
   }
 
@@ -44,10 +44,10 @@ public class ShowMeTheConsertApplication {
           .url("https://example1.com").concertDateTime(LocalDateTime.now()).concertHallTag("Tag-1")
           .build());
       repository.save(ConcertInfo.builder().showId("show-2").place("place-2").title("title-2")
-          .url("https://example2.com").concertDateTime(LocalDateTime.now()).concertHallTag("Tag-2")
+          .url("https://example2.com").concertDateTime(LocalDateTime.now()).concertHallTag("Tag-1")
           .build());
       repository.save(ConcertInfo.builder().showId("show-3").place("place-3").title("title-3")
-          .url("https://example3.com").concertDateTime(LocalDateTime.now()).concertHallTag("Tag-3")
+          .url("https://example3.com").concertDateTime(LocalDateTime.now()).concertHallTag("Tag-1")
           .build());
     };
   }
