@@ -26,16 +26,19 @@
     </tr>
     </thead>
     <tbody>
+
     <tr th:each="week : ${calendar}">
       <td th:each="day : ${week}" th:class="'text-center'">
         <div th:text="${day != null} ? ${day.getDay()} : ''"></div>
-
         <div th:each="time : ${day.getSlots()}">
-          <div th:text="${time.getStartTimeInfo()}"></div>
-
+          <div>
+            <span th:text="${time.getStartTimeInfo()}"></span>
+          </div>
+          <div th:each="info : ${time.getConcertInfos()}" th:text="${info.getTitle()}"></div>
         </div>
       </td>
     </tr>
+
     </tbody>
   </table>
 </div>
