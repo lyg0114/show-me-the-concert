@@ -34,7 +34,10 @@
           <div>
             <span th:text="${time.getStartTimeInfo()}"></span>
           </div>
-          <div th:each="info : ${time.getConcertInfos()}" th:text="${info.getTitle()}"></div>
+          <div th:each="info : ${time.getConcertInfos()}">
+            <div th:text="${info.getTitle()}"></div>
+            <div th:text="${info.getConcertHallTag()}"></div>
+          </div>
         </div>
       </td>
     </tr>
