@@ -1,8 +1,10 @@
 package com.consert.showmetheconsert.service;
 
+import com.consert.showmetheconsert.model.entity.ConcertInfo;
 import com.consert.showmetheconsert.repository.ConcertInfoRepository;
 import com.consert.showmetheconsert.service.sample.MakeSampleData;
 import com.consert.showmetheconsert.util.CalendarDay;
+import com.consert.showmetheconsert.util.CalendarSlot;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +34,16 @@ class MakeCalendarServiceTest {
     List<List<CalendarDay>> lists = service.makeCalendar();
     for (List<CalendarDay> list : lists) {
       for (CalendarDay day : list) {
-        System.out.println("day.getDay() = " + day.getDay());
+        List<CalendarSlot> slots = day.getSlots();
+        if(slots.size() > 0){
+          for (CalendarSlot slot : slots) {
+            System.out.println("slot.getStartTimeInfo() = " + slot.getStartTimeInfo());
+            List<ConcertInfo> concertInfos = slot.getConcertInfos();
+            for (ConcertInfo concertInfo : concertInfos) {
+              System.out.println("concertInfo = " + concertInfo);
+            }
+          }
+        }
       }
     }
   }
