@@ -17,7 +17,7 @@ public class CalendarSlot {
     this.endTime = endTime;
   }
 
-  public LocalTime getTimeInfo() {
+  public LocalTime getStartTimeInfo() {
     return startTime;
   }
 }

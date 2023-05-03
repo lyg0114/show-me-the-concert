@@ -31,7 +31,7 @@
         <div th:text="${day != null} ? ${day.getDay()} : ''"></div>
         <div th:each="time : ${day.getSlots()}"
              th:class="${time} == '00:00' ? 'time-slot' : 'time-slot border-left'"
-             th:text="${time.getTimeInfo()}"></div>
+             th:text="${time.getStartTimeInfo()}"></div>
       </td>
     </tr>
     </tbody>
