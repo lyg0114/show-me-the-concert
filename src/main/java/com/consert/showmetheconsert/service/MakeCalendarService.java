@@ -58,11 +58,14 @@ public class MakeCalendarService {
               LocalDateTime currentConcertDateTime = LocalDateTime.of(currentDate, startTime);
               LocalTime endTime = startTime.plusMinutes(30);
               CalendarSlot slot = new CalendarSlot(startTime, endTime);
+
               for (ConcertInfo concertInfo : concertInfos) {
-                if(concertInfo.getConcertDateTime().equals(currentConcertDateTime)){
+                if (concertInfo.getConcertDateTime().equals(currentConcertDateTime)) {
+                  slot.addInfo(concertInfo);
                   slots.add(slot);
                 }
               }
+
             }
           }
           day.setSlots(slots);
