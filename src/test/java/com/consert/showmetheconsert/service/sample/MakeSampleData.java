@@ -19,6 +19,13 @@ public class MakeSampleData {
             .build()
         );
     concertInfoRepository
+        .save(ConcertInfo.builder().showId("concert-A").place("place-A").title("title-A")
+            .url("https://exampleA.com").concertHallTag("Tag-2")
+            .concertDateTime(LocalDateTime.of(2023, 5, 3, 13, 0))
+            .build()
+        );
+
+    concertInfoRepository
         .save(ConcertInfo.builder().showId("show-2").place("place-2").title("title-2")
             .url("https://example2.com").concertHallTag("Tag-1")
             .concertDateTime(LocalDateTime.of(2023, 5, 17, 17, 0))
