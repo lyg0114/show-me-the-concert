@@ -1,0 +1,51 @@
+td.time-slot {
+  height: 30px;
+}
+
+td.text-center {
+  vertical-align: middle;
+}
+
+td.date-cell:hover {
+  background-color: #f5f5f5;
+}
+
+td.date-cell {
+  cursor: pointer;
+}
+
+.event-info {
+  padding: 5px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #fff;
+}
+
+.event-info .title {
+  font-weight: bold;
+}
+
+.event-info .tag {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 3px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.event-info.tag-1 {
+  background-color: #4285f4;
+}
+
+.event-info.tag-2 {
+  background-color: #34a853;
+}
+
+.event-info.tag-3 {
+  background-color: #fbbc05;
+}
+
+.event-info.tag-4 {
+  background-color: #ea4335;
+}
