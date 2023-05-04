@@ -49,3 +49,7 @@ td.date-cell {
 .event-info.tag-4 {
   background-color: #ea4335;
 }
+
+.btn-group {
+  float: right;
+}

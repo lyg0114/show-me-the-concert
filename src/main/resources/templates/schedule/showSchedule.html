@@ -3,11 +3,15 @@
 <head>
   <title>Calendar</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" th:href="@{/css/showSchedule.css}" />
+  <link rel="stylesheet" th:href="@{/css/showSchedule.css}"/>
 </head>
 <body>
 <div class="container">
-  <h1 class="text-center">Calendar</h1>
+  <h1 class="text-center" id="month-year">May 2023</h1>
+  <div class="btn-group">
+    <button id="prev-month" class="btn btn-primary">&lt;</button>
+    <button id="next-month" class="btn btn-primary">&gt;</button>
+  </div>
   <table class="table table-bordered">
     <thead>
     <tr>
