@@ -3,7 +3,6 @@ package com.consert.showmetheconsert;
 import com.consert.showmetheconsert.conf.GlobalVar;
 import com.consert.showmetheconsert.model.entity.ConcertInfo;
 import com.consert.showmetheconsert.repository.ConcertInfoRepository;
-import com.consert.showmetheconsert.schedule.SearchDaeguConcertSchedule;
 import java.time.LocalDateTime;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,10 +17,7 @@ public class ShowMeTheConsertApplication {
 
   public static void main(String[] args) {
     System.setProperty(GlobalVar.DRIVER_NAME, GlobalVar.DRIVER_PATH);
-    SpringApplication.run(ShowMeTheConsertApplication.class, args)
-        .getBean(SearchDaeguConcertSchedule.class)
-//        .searchData()
-    ;
+    SpringApplication.run(ShowMeTheConsertApplication.class, args);
   }
 
   @Bean
@@ -33,7 +29,7 @@ public class ShowMeTheConsertApplication {
   public ChromeOptions chromeOptions() {
     return new ChromeOptions()
         .addArguments("--remote-allow-origins=*")
-        .setHeadless(true)
+        .setHeadless(false)
         ;
   }
 
