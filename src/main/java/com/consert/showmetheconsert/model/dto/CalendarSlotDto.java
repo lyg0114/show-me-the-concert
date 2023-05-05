@@ -11,14 +11,14 @@ import java.util.List;
  * @package : com.consert.showmetheconsert.util
  * @since : 2023/05/02
  */
-public class CalendarSlot {
+public class CalendarSlotDto {
 
   private LocalDateTime currentConcertDateTime;
   private LocalTime startTime;
   private LocalTime endTime;
   private List<ConcertInfo> infos;
 
-  public CalendarSlot(LocalDateTime currentConcertDateTime,
+  public CalendarSlotDto(LocalDateTime currentConcertDateTime,
       LocalTime startTime, LocalTime endTime) {
     this.currentConcertDateTime = currentConcertDateTime;
     this.startTime = startTime;

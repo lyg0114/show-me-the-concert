@@ -9,12 +9,12 @@ import java.util.List;
  * @package : com.consert.showmetheconsert.util
  * @since : 2023/05/02
  */
-public class CalendarDay {
+public class CalendarDayDto {
 
   private LocalDate date;
-  private List<CalendarSlot> slots;
+  private List<CalendarSlotDto> slots;
 
-  public CalendarDay(LocalDate date) {
+  public CalendarDayDto(LocalDate date) {
     this.date = date;
   }
 
@@ -26,7 +26,7 @@ public class CalendarDay {
     }
   }
 
-  public List<CalendarSlot> getSlots() {
+  public List<CalendarSlotDto> getSlots() {
     if (slots == null || slots.size() == 0) {
       return new ArrayList<>();
     } else {
@@ -34,7 +34,7 @@ public class CalendarDay {
     }
   }
 
-  public void setSlots(List<CalendarSlot> slots) {
+  public void setSlots(List<CalendarSlotDto> slots) {
     this.slots = slots;
   }
 }

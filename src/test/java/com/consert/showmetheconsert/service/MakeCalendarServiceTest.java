@@ -3,8 +3,8 @@ package com.consert.showmetheconsert.service;
 import com.consert.showmetheconsert.model.entity.ConcertInfo;
 import com.consert.showmetheconsert.repository.ConcertInfoRepository;
 import com.consert.showmetheconsert.service.sample.MakeSampleData;
-import com.consert.showmetheconsert.model.dto.CalendarDay;
-import com.consert.showmetheconsert.model.dto.CalendarSlot;
+import com.consert.showmetheconsert.model.dto.CalendarDayDto;
+import com.consert.showmetheconsert.model.dto.CalendarSlotDto;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,12 +31,12 @@ class MakeCalendarServiceTest {
 
   @Test
   public void testMakeCalendar() {
-    List<List<CalendarDay>> lists = service.makeCalendar();
-    for (List<CalendarDay> list : lists) {
-      for (CalendarDay day : list) {
-        List<CalendarSlot> slots = day.getSlots();
+    List<List<CalendarDayDto>> lists = service.makeCalendar();
+    for (List<CalendarDayDto> list : lists) {
+      for (CalendarDayDto day : list) {
+        List<CalendarSlotDto> slots = day.getSlots();
         if(slots.size() > 0){
-          for (CalendarSlot slot : slots) {
+          for (CalendarSlotDto slot : slots) {
             System.out.println("slot.getCurrentConcertDateTime() = " + slot.getCurrentConcertDateTime());
             List<ConcertInfo> concertInfos = slot.getConcertInfos();
             for (ConcertInfo concertInfo : concertInfos) {
