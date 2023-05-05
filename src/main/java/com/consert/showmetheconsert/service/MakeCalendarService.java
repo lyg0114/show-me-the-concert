@@ -2,8 +2,8 @@ package com.consert.showmetheconsert.service;
 
 import com.consert.showmetheconsert.model.entity.ConcertInfo;
 import com.consert.showmetheconsert.repository.ConcertInfoRepository;
-import com.consert.showmetheconsert.util.CalendarDay;
-import com.consert.showmetheconsert.util.CalendarSlot;
+import com.consert.showmetheconsert.model.dto.CalendarDay;
+import com.consert.showmetheconsert.model.dto.CalendarSlot;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package com.consert.showmetheconsert.util;
+package com.consert.showmetheconsert.model.dto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

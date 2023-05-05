@@ -1,4 +1,4 @@
-package com.consert.showmetheconsert.util;
+package com.consert.showmetheconsert.model.dto;
 
 import com.consert.showmetheconsert.model.entity.ConcertInfo;
 import java.time.LocalDateTime;
