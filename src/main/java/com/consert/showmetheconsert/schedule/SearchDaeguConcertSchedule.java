@@ -83,7 +83,8 @@ public class SearchDaeguConcertSchedule {
     sb.append(driver.findElement(By.xpath(CONCERT_DATE_XPATH)).getText());
     sb.append(" ");
     sb.append(driver.findElement(By.xpath(CONCERT_TIME_XPATH)).getText());
-    return TimeUtil.convertToLocalDateTime(sb.toString());
+    LocalDateTime concertTime = TimeUtil.convertToLocalDateTime(sb.toString());
+    return concertTime;
   }
 }
 
