@@ -1,5 +1,7 @@
 package com.consert.showmetheconsert.util;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.consert.showmetheconsert.conf.GlobalVar;
 import com.consert.showmetheconsert.repository.ConcertInfoRepository;
 import com.consert.showmetheconsert.schedule.SearchDaeguConcertSchedule;
@@ -33,4 +35,11 @@ class TimeUtilTest {
     Assertions.assertEquals(LocalDateTime.of(2023, 5, 7, 19, 0), localDateTime);
   }
 
+  @Test
+  public void testCalculateConcertDateWhenConcertIsNull() {
+    SearchDaeguConcertSchedule schedule = getSearchDaeguConcertSchedule();
+    assertThrows(NullPointerException.class, () -> {
+      schedule.calculateConcertDate(null, null);
+    });
+  }
 }

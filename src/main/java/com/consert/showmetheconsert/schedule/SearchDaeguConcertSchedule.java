@@ -97,7 +97,15 @@ public class SearchDaeguConcertSchedule {
       datetimeStr = matcher.group();
     }
 
-    return TimeUtil.convertToLocalDateTime(datetimeStr);
+    LocalDateTime resultDateTime = null;
+    try {
+      resultDateTime = TimeUtil.convertToLocalDateTime(datetimeStr);
+    } catch (NullPointerException ex) {
+      log.error(ex.getMessage());
+      throw ex;
+    }
+
+    return resultDateTime;
   }
 }
 
