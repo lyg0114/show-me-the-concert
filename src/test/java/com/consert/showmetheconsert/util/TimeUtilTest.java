@@ -42,4 +42,13 @@ class TimeUtilTest {
       schedule.calculateConcertDate(null, null);
     });
   }
+
+  @Test
+  public void test_calculate_concertDate_when_concert_date_isEmpty() {
+  }
+
+  @Test
+  public void test_calculate_concertDate_when_concert_time_isEmpty() {
+  }
+
 }
