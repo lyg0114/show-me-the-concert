@@ -29,14 +29,14 @@ class TimeUtilTest {
   }
 
   @Test
-  public void testCalculateConcertDate() {
+  public void test_calculate_concertDate() {
     SearchDaeguConcertSchedule schedule = getSearchDaeguConcertSchedule();
     LocalDateTime localDateTime = schedule.calculateConcertDate("DUMMY_STRING 2023-05-07", "19:00");
     Assertions.assertEquals(LocalDateTime.of(2023, 5, 7, 19, 0), localDateTime);
   }
 
   @Test
-  public void testCalculateConcertDateWhenConcertIsNull() {
+  public void test_calculate_concertDate_when_concert_info_isNull() {
     SearchDaeguConcertSchedule schedule = getSearchDaeguConcertSchedule();
     assertThrows(NullPointerException.class, () -> {
       schedule.calculateConcertDate(null, null);
