@@ -20,8 +20,8 @@ public class TimeUtil {
   }
 
   public static LocalDateTime convertToLocalDateTime(String dateTimeStr) {
-    if (dateTimeStr == null) {
-      throw new NullPointerException("dateTimeStr is Null");
+    if (dateTimeStr == null || dateTimeStr.equals("")) {
+      throw new NullPointerException("dateTimeStr can't be null and whitespace");
     }
 
     return LocalDateTime
