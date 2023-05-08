@@ -20,6 +20,10 @@ public class TimeUtil {
   }
 
   public static LocalDateTime convertToLocalDateTime(String dateTimeStr) {
+    if (dateTimeStr == null) {
+      throw new NullPointerException("dateTimeStr is Null");
+    }
+
     return LocalDateTime
         .parse(dateTimeStr, DateTimeFormatter.ofPattern(GlobalVar.DATE_TIME_FORMAT));
   }
