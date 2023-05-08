@@ -26,12 +26,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SearchDaeguConcertSchedule {
 
-  private static final String RETURN_BTN_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[1]/ul/li[3]/a";
-  private static final String COMPARE_STR = "javascript:fn_view('SC";
-  private static final String CONCERT_TITLE_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/strong";
-  private static final String CONCERT_PLACE_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/ul/li[1]/div";
-  private static final String CONCERT_DATE_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/ul/li[2]/div";
-  private static final String CONCERT_TIME_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/ul/li[3]/div";
+  public static final String RETURN_BTN_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[1]/ul/li[3]/a";
+  public static final String COMPARE_STR = "javascript:fn_view('SC";
+  public static final String CONCERT_TITLE_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/strong";
+  public static final String CONCERT_PLACE_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/ul/li[1]/div";
+  public static final String CONCERT_DATE_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/ul/li[2]/div";
+  public static final String CONCERT_TIME_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/ul/li[3]/div";
 
   private final GlobalVar global;
   private final WebDriver driver;
@@ -78,7 +78,7 @@ public class SearchDaeguConcertSchedule {
     log.info(info.toString());
   }
 
-  private LocalDateTime calculateConcertDate() {
+  public LocalDateTime calculateConcertDate() {
     StringBuilder sb = new StringBuilder();
     sb.append(driver.findElement(By.xpath(CONCERT_DATE_XPATH)).getText());
     sb.append(" ");
