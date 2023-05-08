@@ -13,8 +13,20 @@ import org.openqa.selenium.WebElement;
  */
 public class DummyWebDriver implements WebDriver {
 
+  String dateStr;
+  String timeStr;
+
+  public DummyWebDriver() {
+  }
+
+  public DummyWebDriver(String dateStr, String timeStr) {
+    this.dateStr = dateStr;
+    this.timeStr = timeStr;
+  }
+
   @Override
-  public void get(String url) {}
+  public void get(String url) {
+  }
 
   @Override
   public String getCurrentUrl() {
