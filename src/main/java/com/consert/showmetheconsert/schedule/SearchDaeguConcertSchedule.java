@@ -7,6 +7,8 @@ import com.consert.showmetheconsert.util.TimeUtil;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -32,6 +34,7 @@ public class SearchDaeguConcertSchedule {
   public static final String CONCERT_PLACE_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/ul/li[1]/div";
   public static final String CONCERT_DATE_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/ul/li[2]/div";
   public static final String CONCERT_TIME_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/ul/li[3]/div";
+  public static final String REG_EXPRESSION_DATE = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}";
 
   private final GlobalVar global;
   private final WebDriver driver;
@@ -71,20 +74,30 @@ public class SearchDaeguConcertSchedule {
         .url(driver.getCurrentUrl())
         .title(driver.findElement(By.xpath(CONCERT_TITLE_XPATH)).getText())
         .place(driver.findElement(By.xpath(CONCERT_PLACE_XPATH)).getText())
-        .concertDateTime(calculateConcertDate())
+        .concertDateTime(calculateConcertDate(
+            driver.findElement(By.xpath(CONCERT_DATE_XPATH)).getText(),
+            driver.findElement(By.xpath(CONCERT_TIME_XPATH)).getText()))
         .concertHallTag("TAG-1")
         .build();
     concertInfoRepo.save(info);
     log.info(info.toString());
   }
 
-  public LocalDateTime calculateConcertDate() {
+  public LocalDateTime calculateConcertDate(String dateStr, String timeStr) {
     StringBuilder sb = new StringBuilder();
-    sb.append(driver.findElement(By.xpath(CONCERT_DATE_XPATH)).getText());
+    sb.append(dateStr);
     sb.append(" ");
-    sb.append(driver.findElement(By.xpath(CONCERT_TIME_XPATH)).getText());
-    LocalDateTime concertTime = TimeUtil.convertToLocalDateTime(sb.toString());
-    return concertTime;
+    sb.append(timeStr);
+    String dateTime = sb.toString();
+
+    Pattern pattern = Pattern.compile(REG_EXPRESSION_DATE);
+    Matcher matcher = pattern.matcher(dateTime);
+    String datetimeStr = null;
+    if (matcher.find()) {
+      datetimeStr = matcher.group();
+    }
+
+    return TimeUtil.convertToLocalDateTime(datetimeStr);
   }
 }
 

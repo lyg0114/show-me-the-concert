@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 import com.consert.showmetheconsert.conf.GlobalVar;
 import com.consert.showmetheconsert.repository.ConcertInfoRepository;
 import com.consert.showmetheconsert.schedule.SearchDaeguConcertSchedule;
+import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.Assertions;
@@ -44,7 +45,8 @@ class TimeUtilTest {
   @Test
   public void testCalculateConcertDate() {
     SearchDaeguConcertSchedule schedule = getSearchDaeguConcertSchedule();
-    when(null).thenReturn(null);
+    LocalDateTime localDateTime = schedule.calculateConcertDate("DUMMY_STRING 2023-05-07", "19:00");
+    Assertions.assertEquals(LocalDateTime.of(2023, 5, 7, 19, 0), localDateTime);
   }
 
 }
