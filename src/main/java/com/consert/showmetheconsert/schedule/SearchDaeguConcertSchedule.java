@@ -102,7 +102,6 @@ public class SearchDaeguConcertSchedule {
       resultDateTime = TimeUtil.convertToLocalDateTime(datetimeStr);
     } catch (NullPointerException ex) {
       log.error(ex.getMessage());
-      throw ex;
     }
 
     return resultDateTime;
