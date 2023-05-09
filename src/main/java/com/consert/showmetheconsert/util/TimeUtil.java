@@ -21,7 +21,7 @@ public class TimeUtil {
 
   public static LocalDateTime convertToLocalDateTime(String dateTimeStr) {
     if (dateTimeStr == null || dateTimeStr.equals("")) {
-      throw new NullPointerException("dateTimeStr can't be null and whitespace");
+      throw new NullPointerException("dateTimeStr has null or whitespace");
     }
 
     return LocalDateTime
