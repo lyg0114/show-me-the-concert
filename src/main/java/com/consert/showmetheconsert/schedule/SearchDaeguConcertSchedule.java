@@ -62,9 +62,9 @@ public class SearchDaeguConcertSchedule {
     for (int i = 0; i < targets.size(); i++) {
       jsDriver.executeScript(targets.get(i));
       extractData();
-      TimeUtil.sleep(1000);
+      TimeUtil.sleep(1500);
       driver.findElement(By.xpath(RETURN_BTN_XPATH)).click();
-      TimeUtil.sleep(1000);
+      TimeUtil.sleep(1500);
     }
   }
 
