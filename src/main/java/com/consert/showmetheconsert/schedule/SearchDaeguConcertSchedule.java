@@ -84,6 +84,17 @@ public class SearchDaeguConcertSchedule {
   }
 
   public LocalDateTime calculateConcertDate(String dateStr, String timeStr) {
+    LocalDateTime localDateTime = null;
+    try {
+      localDateTime = getLocalDateTime(dateStr, timeStr);
+    } catch (RuntimeException ex) {
+      log.error("dateTimeStr has null or whitespace");
+    }
+
+    return localDateTime;
+  }
+
+  private LocalDateTime getLocalDateTime(String dateStr, String timeStr) {
     StringBuilder sb = new StringBuilder();
     sb.append(dateStr);
     sb.append(" ");
@@ -97,14 +108,7 @@ public class SearchDaeguConcertSchedule {
       datetimeStr = matcher.group();
     }
 
-    LocalDateTime resultDateTime = null;
-    try {
-      resultDateTime = TimeUtil.convertToLocalDateTime(datetimeStr);
-    } catch (NullPointerException ex) {
-      log.error(ex.getMessage());
-    }
-
-    return resultDateTime;
+    return TimeUtil.convertToLocalDateTime(datetimeStr);
   }
 }
 

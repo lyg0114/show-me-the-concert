@@ -41,16 +41,22 @@ class TimeUtilTest {
   @Test
   public void test_calculate_concertDate_when_concert_info_isNull() {
     SearchDaeguConcertSchedule schedule = getSearchDaeguConcertSchedule();
-    LocalDateTime concertDateTime = schedule.calculateConcertDate(null, null);
-    assertNull(concertDateTime);
+    LocalDateTime resultDateTime = schedule.calculateConcertDate(null, null);
+    assertNull(resultDateTime);
   }
 
   @Test
   public void test_calculate_concertDate_when_concert_date_isEmpty() {
+    SearchDaeguConcertSchedule schedule = getSearchDaeguConcertSchedule();
+    LocalDateTime resultDateTime = schedule.calculateConcertDate("2023-05-07", null);
+    assertNull(resultDateTime);
   }
 
   @Test
   public void test_calculate_concertDate_when_concert_time_isEmpty() {
+    SearchDaeguConcertSchedule schedule = getSearchDaeguConcertSchedule();
+    LocalDateTime resultDateTime = schedule.calculateConcertDate(null, "19:00");
+    assertNull(resultDateTime);
   }
 
 }
