@@ -25,6 +25,10 @@ public class CalendarSlotDto {
     infos = new ArrayList<>();
   }
 
+  public LocalTime getStartTimeInfo() {
+    return startTime;
+  }
+
   public LocalDateTime getCurrentConcertDateTime() {
     return currentConcertDateTime;
   }
