@@ -31,13 +31,16 @@ class MakeCalendarServiceTest {
 
   @Test
   public void testMakeCalendar() {
-    List<List<CalendarDayDto>> lists = service.makeCalendar();
+    int year = 2023;
+    int month = 5;
+    List<List<CalendarDayDto>> lists = service.makeCalendar(year, month);
     for (List<CalendarDayDto> list : lists) {
       for (CalendarDayDto day : list) {
         List<CalendarSlotDto> slots = day.getSlots();
-        if(slots.size() > 0){
+        if (slots.size() > 0) {
           for (CalendarSlotDto slot : slots) {
-            System.out.println("slot.getCurrentConcertDateTime() = " + slot.getCurrentConcertDateTime());
+            System.out
+                .println("slot.getCurrentConcertDateTime() = " + slot.getCurrentConcertDateTime());
             List<ConcertInfo> concertInfos = slot.getConcertInfos();
             for (ConcertInfo concertInfo : concertInfos) {
               System.out.println("concertInfo = " + concertInfo);

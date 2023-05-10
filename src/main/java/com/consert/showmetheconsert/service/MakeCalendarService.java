@@ -1,9 +1,9 @@
 package com.consert.showmetheconsert.service;
 
-import com.consert.showmetheconsert.model.entity.ConcertInfo;
-import com.consert.showmetheconsert.repository.ConcertInfoRepository;
 import com.consert.showmetheconsert.model.dto.CalendarDayDto;
 import com.consert.showmetheconsert.model.dto.CalendarSlotDto;
+import com.consert.showmetheconsert.model.entity.ConcertInfo;
+import com.consert.showmetheconsert.repository.ConcertInfoRepository;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,8 +25,10 @@ public class MakeCalendarService {
 
   private final ConcertInfoRepository concertInfoRepo;
 
-  public List<DayOfWeek> getDayOfWeeks() {
-    LocalDate startDate = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
+  public List<DayOfWeek> getDayOfWeeks(int year, int month) {
+    LocalDate startDate = LocalDate.of(year, month, 1);
+    startDate.with(TemporalAdjusters.firstDayOfMonth());
+
     List<DayOfWeek> daysOfWeek = new ArrayList<>();
     for (int i = 0; i < 7; i++) {
       daysOfWeek.add(startDate.plusDays(i).getDayOfWeek());
@@ -34,21 +36,28 @@ public class MakeCalendarService {
     return daysOfWeek;
   }
 
-  public List<List<CalendarDayDto>> makeCalendar() {
-    LocalDateTime start = LocalDateTime.of(2023, 5, 1, 0, 0);
-    LocalDateTime end = LocalDateTime.of(2023, 6, 1, 0, 0);
+  public List<List<CalendarDayDto>> makeCalendar(int year, int month) {
+    LocalDateTime start = LocalDateTime.of(year, month, 1, 0, 0);
+    LocalDateTime end = LocalDateTime.of(year, getNextMonth(month), 1, 0, 0);
     List<ConcertInfo> concertInfos = concertInfoRepo.findByConcertDateTimeBetween(start, end);
-
     List<List<CalendarDayDto>> calendarRows = new ArrayList<>();
-    makeBasicCalendar(calendarRows);
+    makeBasicCalendar(calendarRows, year, month);
     asignConcertInfos(concertInfos, calendarRows);
     cleanTable(calendarRows);
-
     return calendarRows;
   }
 
-  private void makeBasicCalendar(List<List<CalendarDayDto>> calendarRows) {
-    LocalDate startDate = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
+  private int getNextMonth(int month) {
+    if (month == 12) {
+      return 1;
+    } else {
+      return month + 1;
+    }
+  }
+
+  private void makeBasicCalendar(List<List<CalendarDayDto>> calendarRows, int year, int month) {
+    LocalDate startDate = LocalDate.of(year, month, 1)
+        .with(TemporalAdjusters.firstDayOfMonth());
     LocalDate endDate = startDate.plusMonths(1).minusDays(1);
     LocalDate currentDate = startDate;
     while (!currentDate.isAfter(endDate)) {
@@ -73,7 +82,8 @@ public class MakeCalendarService {
     }
   }
 
-  private void asignConcertInfos(List<ConcertInfo> concertInfos, List<List<CalendarDayDto>> calendarRows) {
+  private void asignConcertInfos(List<ConcertInfo> concertInfos,
+      List<List<CalendarDayDto>> calendarRows) {
     for (List<CalendarDayDto> calendarRow : calendarRows) {
       for (CalendarDayDto calendarDay : calendarRow) {
         for (CalendarSlotDto slot : calendarDay.getSlots()) {
