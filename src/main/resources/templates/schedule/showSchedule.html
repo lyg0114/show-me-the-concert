@@ -7,10 +7,13 @@
 </head>
 <body>
 <div class="container">
-  <h1 class="text-center" id="month-year">May 2023</h1>
+  <h1 class="text-center" id="month-year">
+    <span th:text="${currentYear}"></span>.
+    <span th:text="${currentMonth}"></span>
+  </h1>
   <div class="btn-group">
-    <button id="prev-month" class="btn btn-primary">&lt;</button>
-    <button id="next-month" class="btn btn-primary">&gt;</button>
+    <button id="prev-month" th:onclick="|location.href='/schedule/${beforeYear}/${beforeMonth}'|" class="btn btn-primary">&lt;</button>
+    <button id="next-month" th:onclick="|location.href='/schedule/${afterYear}/${afterMonth}'|" class="btn btn-primary">&gt;</button>
   </div>
   <table class="table table-bordered">
     <thead>
