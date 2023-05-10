@@ -29,15 +29,20 @@
     <tr th:each="week : ${calendar}">
       <td th:each="day : ${week}" th:class="'text-center'">
         <div th:text="${day != null} ? ${day.getDay()} : ''"></div>
+
         <div th:each="time : ${day.getSlots()}">
           <div>
             <span th:text="${time.getStartTimeInfo()}"></span>
           </div>
           <div th:each="info : ${time.getConcertInfos()}">
-            <div th:text="${info.getTitle()}"></div>
-            <div th:text="${info.getConcertHallTag()}"></div>
+            <div >
+              <a th:href="${info.getUrl()}" >
+                <span th:text="${info.getTitle()}"></span>
+              </a>
+            </div>
           </div>
         </div>
+
       </td>
     </tr>
 
