@@ -89,8 +89,7 @@ public class MakeCalendarService {
         for (CalendarSlotDto slot : calendarDay.getSlots()) {
           LocalDateTime currentConcertDateTime = slot.getCurrentConcertDateTime();
           concertInfos.stream()
-              .filter(
-                  concertInfo -> concertInfo.getConcertDateTime().equals(currentConcertDateTime))
+              .filter(concertInfo -> concertInfo.getConcertDateTime().equals(currentConcertDateTime))
               .forEach(slot::addInfo);
         }
       }

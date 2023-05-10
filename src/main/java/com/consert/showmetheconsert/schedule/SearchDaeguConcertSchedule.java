@@ -69,7 +69,7 @@ public class SearchDaeguConcertSchedule {
   }
 
   @Transactional
-  protected void extractData() {
+  public void extractData() {
     ConcertInfo info = ConcertInfo.builder()
         .url(driver.getCurrentUrl())
         .title(driver.findElement(By.xpath(CONCERT_TITLE_XPATH)).getText())
@@ -78,9 +78,21 @@ public class SearchDaeguConcertSchedule {
             driver.findElement(By.xpath(CONCERT_DATE_XPATH)).getText(),
             driver.findElement(By.xpath(CONCERT_TIME_XPATH)).getText()))
         .concertHallTag("TAG-1")
+        .showId(extractShowId(driver.getCurrentUrl()))
         .build();
     concertInfoRepo.save(info);
     log.info(info.toString());
+  }
+
+  public String extractShowId(String targetUrl) {
+    String result = null;
+    try {
+      result = targetUrl.split("&")[1]
+          .split("=")[1];
+    } catch (RuntimeException ex) {
+      log.error("check the targetUrl : " + targetUrl);
+    }
+    return result;
   }
 
   public LocalDateTime calculateConcertDate(String dateStr, String timeStr) {
