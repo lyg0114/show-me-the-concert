@@ -33,7 +33,7 @@ public class ShowMeTheConsertApplication {
         ;
   }
 
-  @Bean
+  //@Bean
   public CommandLineRunner sampleData(ConcertInfoRepository repository) {
     return (args) -> {
       repository
