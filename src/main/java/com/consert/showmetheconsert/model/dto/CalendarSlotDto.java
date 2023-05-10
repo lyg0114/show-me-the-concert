@@ -18,16 +18,11 @@ public class CalendarSlotDto {
   private LocalTime endTime;
   private List<ConcertInfo> infos;
 
-  public CalendarSlotDto(LocalDateTime currentConcertDateTime,
-      LocalTime startTime, LocalTime endTime) {
+  public CalendarSlotDto(LocalDateTime currentConcertDateTime, LocalTime start, LocalTime end) {
     this.currentConcertDateTime = currentConcertDateTime;
-    this.startTime = startTime;
-    this.endTime = endTime;
+    this.startTime = start;
+    this.endTime = end;
     infos = new ArrayList<>();
-  }
-
-  public LocalTime getStartTimeInfo() {
-    return startTime;
   }
 
   public LocalDateTime getCurrentConcertDateTime() {
