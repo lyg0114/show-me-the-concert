@@ -29,7 +29,7 @@ public class ShowMeTheConsertApplication {
   public ChromeOptions chromeOptions() {
     return new ChromeOptions()
         .addArguments("--remote-allow-origins=*")
-        .setHeadless(false)
+        .setHeadless(true)
         ;
   }
 
