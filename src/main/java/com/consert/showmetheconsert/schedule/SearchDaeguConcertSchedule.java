@@ -59,8 +59,8 @@ public class SearchDaeguConcertSchedule {
 
   private void extracted(List<String> targets) {
     JavascriptExecutor jsDriver = (JavascriptExecutor) driver;
-    for (int i = 0; i < targets.size(); i++) {
-      jsDriver.executeScript(targets.get(i));
+    for (String target : targets) {
+      jsDriver.executeScript(target);
       extractData();
       TimeUtil.sleep(1500);
       driver.findElement(By.xpath(RETURN_BTN_XPATH)).click();
@@ -77,7 +77,7 @@ public class SearchDaeguConcertSchedule {
         .concertDateTime(calculateConcertDate(
             driver.findElement(By.xpath(CONCERT_DATE_XPATH)).getText(),
             driver.findElement(By.xpath(CONCERT_TIME_XPATH)).getText()))
-        .concertHallTag("TAG-1")
+        .concertHallTag(GlobalVar.TAG_DAEGUCONCERT_HOUSE)
         .showId(extractShowId(driver.getCurrentUrl()))
         .build();
     concertInfoRepo.save(info);
