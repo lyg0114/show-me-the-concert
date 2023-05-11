@@ -24,5 +24,4 @@ public class GlobalVar {
   public static String TAG_DAEGUCONCERT_HOUSE = "TAG-1";
   @Value("${daeguConcertHouse.url}")
   private String daeguConcertHouseUrl;
-
 }
