@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Service;
@@ -52,17 +51,15 @@ public class SearchSuseongArtSchedule {
     List<WebElement> links = driver.findElements(By.tagName("a"));
     links.forEach(l -> {
       String href = l.getAttribute("href");
-      if (href.contains(COMPARE_STR)) {
+      if (href != null && href.contains(COMPARE_STR)) {
         targets.add(href);
       }
     });
-
   }
 
-  private void extracted(List<String> targets) {
-    JavascriptExecutor jsDriver = (JavascriptExecutor) driver;
-    for (String target : targets) {
-      jsDriver.executeScript(target);
+  private void extracted(List<String> URLs) {
+    for (String url : URLs) {
+      driver.get(url);
       extractData();
       TimeUtil.sleep(1500);
       driver.findElement(By.xpath(RETURN_BTN_XPATH)).click();
@@ -80,10 +77,21 @@ public class SearchSuseongArtSchedule {
             driver.findElement(By.xpath(CONCERT_DATE_XPATH)).getText(),
             driver.findElement(By.xpath(CONCERT_TIME_XPATH)).getText()))
         .concertHallTag(GlobalVar.TAG_SUSEONGART)
-        .showId(null)
+        .showId(extractShowId(driver.getCurrentUrl()))
         .build();
     concertInfoRepo.save(info);
     log.info(info.toString());
+  }
+
+  public String extractShowId(String targetUrl) {
+    String result = null;
+    try {
+      result = targetUrl.split("&")[2]
+          .split("=")[1];
+    } catch (RuntimeException ex) {
+      log.error("check the targetUrl : " + targetUrl);
+    }
+    return result;
   }
 
   public LocalDateTime calculateConcertDate(String dateStr, String timeStr) {
