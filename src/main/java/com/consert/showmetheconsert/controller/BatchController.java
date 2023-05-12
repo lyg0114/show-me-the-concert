@@ -1,7 +1,7 @@
 package com.consert.showmetheconsert.controller;
 
 import com.consert.showmetheconsert.schedule.SearchDaeguConcertSchedule;
-import com.consert.showmetheconsert.schedule.SearchSuseongArtSchedule;
+import com.consert.showmetheconsert.schedule.SearchSuseongArtScheduleInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BatchController {
 
   private final SearchDaeguConcertSchedule daeguConcertSchedule;
-  private final SearchSuseongArtSchedule suseongArtSchedule;
+  private final SearchSuseongArtScheduleInterface suseongArtSchedule;
 
   @GetMapping("/daegu-concert-house")
   public String getDataFromDaeguConcertHouse() {

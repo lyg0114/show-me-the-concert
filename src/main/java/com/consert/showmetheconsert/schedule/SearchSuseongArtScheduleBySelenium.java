@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class SearchSuseongArtSchedule implements SearchSuseongArtScheduleInterface {
+public class SearchSuseongArtScheduleBySelenium implements SearchSuseongArtScheduleInterface {
 
   public static final String RETURN_BTN_XPATH = "/html/body/div/section/div/div/div/div/div[3]/a";
   public static final String COMPARE_STR = "&no=";
