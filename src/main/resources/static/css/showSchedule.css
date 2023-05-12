@@ -87,3 +87,13 @@ button:last-of-type {
   color: black;
 }
 
+.TAG-1 {
+  background: #ddbdbd;
+  border-radius: 6px;
+}
+
+.TAG-2 {
+  background: #c8ce97;
+  border-radius: 6px;
+}
+

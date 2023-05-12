@@ -53,4 +53,8 @@ public class ConcertInfo extends BaseEntity {
         ", concertHallTag='" + concertHallTag + '\'' +
         '}';
   }
+
+  public String getClassStr() {
+    return concertHallTag + " concert-title-div";
+  }
 }
