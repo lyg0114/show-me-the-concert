@@ -22,6 +22,7 @@ public class GlobalVar {
   public static String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm";
 
   public static String TAG_DAEGUCONCERT_HOUSE = "TAG-1";
+  public static String TAG_SUSEONGART = "TAG-2";
 
   @Value("${daeguConcertHouse.url}")
   private String daeguConcertHouseUrl;
