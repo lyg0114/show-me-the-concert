@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class SearchSuseongArtSchedule {
+public class SearchSuseongArtSchedule implements SearchSuseongArtScheduleInterface {
 
   public static final String RETURN_BTN_XPATH = "/html/body/div/section/div/div/div/div/div[3]/a";
   public static final String COMPARE_STR = "&no=";
@@ -40,7 +40,7 @@ public class SearchSuseongArtSchedule {
   private final WebDriver driver;
   private final ConcertInfoRepository concertInfoRepo;
 
-
+  @Override
   public void searchData() {
     driver.get(global.getSuseongArtUrl());
     List<String> targets = new ArrayList<>();
