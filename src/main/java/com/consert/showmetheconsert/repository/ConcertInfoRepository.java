@@ -3,6 +3,7 @@ package com.consert.showmetheconsert.repository;
 import com.consert.showmetheconsert.model.entity.ConcertInfo;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +14,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ConcertInfoRepository extends JpaRepository<ConcertInfo, Long> {
+
   List<ConcertInfo> findByConcertDateTimeBetween(LocalDateTime start, LocalDateTime end);
+
+  Optional<ConcertInfo> findConcertInfoByShowId(String showId);
 }

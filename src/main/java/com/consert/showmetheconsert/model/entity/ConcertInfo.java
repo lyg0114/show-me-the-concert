@@ -57,4 +57,12 @@ public class ConcertInfo extends BaseEntity {
   public String getClassStr() {
     return concertHallTag + " concert-title-div";
   }
+
+  public void updateConcertInfo(ConcertInfo newInfo) {
+    if (newInfo.getPlace() != null) { this.place = newInfo.getPlace(); }
+    if (newInfo.getTitle() != null) { this.title = newInfo.getTitle(); }
+    if (newInfo.getUrl() != null) { this.url = newInfo.getUrl(); }
+    if (newInfo.getConcertDateTime() != null) { this.concertDateTime = newInfo.getConcertDateTime(); }
+    if (newInfo.getConcertHallTag() != null) { this.concertHallTag = newInfo.getConcertHallTag(); }
+  }
 }

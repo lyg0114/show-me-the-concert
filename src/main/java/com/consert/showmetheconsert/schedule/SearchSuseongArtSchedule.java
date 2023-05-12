@@ -7,6 +7,7 @@ import com.consert.showmetheconsert.util.TimeUtil;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.RequiredArgsConstructor;
@@ -80,8 +81,22 @@ public class SearchSuseongArtSchedule {
         .concertHallTag(GlobalVar.TAG_SUSEONGART)
         .showId(extractShowId(driver.getCurrentUrl()))
         .build();
-    concertInfoRepo.save(info);
+    saveInfo(info);
     log.info(info.toString());
+  }
+
+  private void saveInfo(ConcertInfo info) {
+    if (info.getShowId() == null) {
+      return;
+    }
+
+    Optional<ConcertInfo> savedInfo = concertInfoRepo
+        .findConcertInfoByShowId(info.getShowId());
+    if (savedInfo.isPresent()) {
+      savedInfo.ifPresent(i -> i.updateConcertInfo(info));
+    } else {
+      concertInfoRepo.save(info);
+    }
   }
 
   public String extractShowId(String targetUrl) {
