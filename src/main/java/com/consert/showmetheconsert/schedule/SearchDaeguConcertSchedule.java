@@ -51,7 +51,7 @@ public class SearchDaeguConcertSchedule {
     List<WebElement> links = driver.findElements(By.tagName("a"));
     links.forEach(l -> {
       String href = l.getAttribute("href");
-      if (href.contains(COMPARE_STR)) {
+      if (href != null && href.contains(COMPARE_STR)) {
         targets.add(href);
       }
     });
