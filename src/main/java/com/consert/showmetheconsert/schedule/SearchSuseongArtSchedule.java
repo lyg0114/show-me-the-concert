@@ -74,6 +74,7 @@ public class SearchSuseongArtSchedule {
         .title(driver.findElement(By.xpath(CONCERT_TITLE_XPATH)).getText())
         .place(driver.findElement(By.xpath(CONCERT_PLACE_XPATH)).getText())
         .concertDateTime(calculateConcertDate(
+            driver.findElement(By.xpath(CONCERT_TITLE_XPATH)).getText(),
             driver.findElement(By.xpath(CONCERT_DATE_XPATH)).getText(),
             driver.findElement(By.xpath(CONCERT_TIME_XPATH)).getText()))
         .concertHallTag(GlobalVar.TAG_SUSEONGART)
@@ -90,11 +91,12 @@ public class SearchSuseongArtSchedule {
           .split("=")[1];
     } catch (RuntimeException ex) {
       log.error("check the targetUrl : " + targetUrl);
+      ex.printStackTrace();
     }
     return result;
   }
 
-  public LocalDateTime calculateConcertDate(String dateStr, String timeStr) {
+  public LocalDateTime calculateConcertDate(String title, String dateStr, String timeStr) {
     LocalDateTime localDateTime = null;
     try {
       StringBuilder sb = new StringBuilder();
@@ -106,7 +108,8 @@ public class SearchSuseongArtSchedule {
       dateStr = sb.toString();
       localDateTime = getLocalDateTime(dateStr, timeStr);
     } catch (RuntimeException ex) {
-      log.error("dateTimeStr has null or whitespace");
+      log.error(title + " : dateTimeStr has null or whitespace");
+      ex.printStackTrace();
     }
 
     return localDateTime;

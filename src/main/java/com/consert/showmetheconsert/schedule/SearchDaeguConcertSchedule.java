@@ -91,6 +91,7 @@ public class SearchDaeguConcertSchedule {
           .split("=")[1];
     } catch (RuntimeException ex) {
       log.error("check the targetUrl : " + targetUrl);
+      ex.printStackTrace();
     }
     return result;
   }
@@ -101,6 +102,7 @@ public class SearchDaeguConcertSchedule {
       localDateTime = getLocalDateTime(dateStr, timeStr);
     } catch (RuntimeException ex) {
       log.error("dateTimeStr has null or whitespace");
+      ex.printStackTrace();
     }
 
     return localDateTime;
