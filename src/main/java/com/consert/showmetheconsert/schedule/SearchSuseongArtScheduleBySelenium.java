@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Slf4j
 @RequiredArgsConstructor
-@Service
+//@Component
 public class SearchSuseongArtScheduleBySelenium implements SearchSuseongArtScheduleInterface {
 
   public static final String RETURN_BTN_XPATH = "/html/body/div/section/div/div/div/div/div[3]/a";
