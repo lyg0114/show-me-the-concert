@@ -1,3 +1,8 @@
+
+a:hover {
+  text-decoration: none;
+}
+
 td.time-slot {
   height: 30px;
 }
@@ -61,5 +66,24 @@ button {
 
 button:last-of-type {
   margin-right: 0;
+}
+
+.day-info {
+  border-bottom: 2px solid black;
+  margin-bottom: 5px;
+}
+
+.time-info {
+  background: #b6d5ee;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.concert-title-div {
+  margin-top: 3px;
+}
+
+.concert-title {
+  color: black;
 }
 

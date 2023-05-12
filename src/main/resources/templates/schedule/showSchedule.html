@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Calendar</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" th:href="@{/css/showSchedule.css}"/>
 </head>
 <body>
@@ -12,8 +13,12 @@
     <span th:text="${currentMonth}"></span>
   </h1>
   <div class="btn-group">
-    <button id="prev-month" th:onclick="|location.href='/schedule/${beforeYear}/${beforeMonth}'|" class="btn btn-primary">&lt;</button>
-    <button id="next-month" th:onclick="|location.href='/schedule/${afterYear}/${afterMonth}'|" class="btn btn-primary">&gt;</button>
+    <button id="prev-month" th:onclick="|location.href='/schedule/${beforeYear}/${beforeMonth}'|"
+            class="btn btn-primary">&lt;
+    </button>
+    <button id="next-month" th:onclick="|location.href='/schedule/${afterYear}/${afterMonth}'|"
+            class="btn btn-primary">&gt;
+    </button>
   </div>
   <table class="table table-bordered">
     <thead>
@@ -31,16 +36,16 @@
 
     <tr th:each="week : ${calendar}">
       <td th:each="day : ${week}" th:class="'text-center'">
-        <div th:text="${day != null} ? ${day.getDay()} : ''"></div>
+        <div th:class="day-info" th:text="${day != null} ? ${day.getDay()} : ''"></div>
 
         <div th:each="time : ${day.getSlots()}">
-          <div>
+          <div th:class="time-info">
             <span th:text="${time.getStartTimeInfo()}"></span>
           </div>
-          <div th:each="info : ${time.getConcertInfos()}">
-            <div >
-              <a th:href="${info.getUrl()}" >
-                <span th:text="${info.getTitle()}"></span>
+          <div th:class="concert-title-div" th:each="info : ${time.getConcertInfos()}">
+            <div>
+              <a th:href="${info.getUrl()}" th:target="_blank">
+                <span th:class="concert-title" th:text="${info.getTitle()}"></span>
               </a>
             </div>
           </div>
