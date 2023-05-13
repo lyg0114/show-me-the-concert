@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class SearchDaeguConcertScheduleBySelenium {
+public class SearchDaeguConcertScheduleBySelenium implements SearchDaeguConcertScheduleInterface {
 
   public static final String RETURN_BTN_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[1]/ul/li[3]/a";
   public static final String COMPARE_STR = "javascript:fn_view('SC";
@@ -41,6 +41,7 @@ public class SearchDaeguConcertScheduleBySelenium {
   private final WebDriver driver;
   private final ConcertInfoRepository concertInfoRepo;
 
+  @Override
   public void searchData() {
     driver.get(global.getDaeguConcertHouseUrl());
     List<String> targets = new ArrayList<>();
