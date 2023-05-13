@@ -19,14 +19,14 @@ class SearchSuseongArtScheduleByJsoupTest {
   @Autowired
   private ConcertInfoRepository concertInfoRepo;
 
-  private SearchSuseongArtScheduleInterface getSchedule() {
+  private SearchSuseongArtScheduleByJsoup getSchedule() {
     return new SearchSuseongArtScheduleByJsoup(
         global, concertInfoRepo);
   }
 
   @Test
   public void test_searchData() {
-    SearchSuseongArtScheduleInterface schedule = getSchedule();
+    SearchSuseongArtScheduleByJsoup schedule = getSchedule();
     schedule.searchData();
   }
 

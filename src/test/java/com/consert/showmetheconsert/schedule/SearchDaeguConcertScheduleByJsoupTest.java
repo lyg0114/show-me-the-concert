@@ -19,13 +19,13 @@ class SearchDaeguConcertScheduleByJsoupTest {
   @Autowired
   private ConcertInfoRepository concertInfoRepo;
 
-  private SearchDaeguConcertScheduleInterface getSchedule() {
+  private SearchDaeguConcertScheduleByJsoup getSchedule() {
     return new SearchDaeguConcertScheduleByJsoup(global, concertInfoRepo);
   }
 
   @Test
   public void test_searchData() {
-    SearchDaeguConcertScheduleInterface schedule = getSchedule();
+    SearchDaeguConcertScheduleByJsoup schedule = getSchedule();
     schedule.searchData();
   }
 
