@@ -46,7 +46,7 @@ public class SearchSuseongArtScheduleByJsoup implements SearchSuseongArtSchedule
     } catch (IOException ex) {
       log.error(ex.getMessage());
       ex.printStackTrace();
-      throw new RuntimeException();
+      throw new RuntimeException("url connect fail");
     }
 
     ArrayList<String> targetUrls = new ArrayList<>();
@@ -67,7 +67,6 @@ public class SearchSuseongArtScheduleByJsoup implements SearchSuseongArtSchedule
 
   @Transactional
   public void extractData(Document detailDoc, String targetHost) {
-
     ConcertInfo info = ConcertInfo.builder()
         .url(targetHost)
         .title(detailDoc.selectXpath(CONCERT_TITLE_XPATH).html())
@@ -119,7 +118,8 @@ public class SearchSuseongArtScheduleByJsoup implements SearchSuseongArtSchedule
       sb.append("-");
       sb.append(dateStr.split("\\.")[2]);
       dateStr = sb.toString();
-      localDateTime = getLocalDateTime(dateStr, timeStr);
+
+      localDateTime = getLocalDateTime(title, dateStr, timeStr);
     } catch (RuntimeException ex) {
       log.error(title + " : dateTimeStr has null or whitespace");
       ex.printStackTrace();
@@ -128,21 +128,24 @@ public class SearchSuseongArtScheduleByJsoup implements SearchSuseongArtSchedule
     return localDateTime;
   }
 
-  private LocalDateTime getLocalDateTime(String dateStr, String timeStr) {
+  private LocalDateTime getLocalDateTime(String title, String dateStr, String timeStr) {
     StringBuilder sb = new StringBuilder();
     sb.append(dateStr);
     sb.append(" ");
     sb.append(timeStr);
-    String dateTime = sb.toString();
+    String dateTimeStr = sb.toString();
 
     Pattern pattern = Pattern.compile(REG_EXPRESSION_DATE);
-    Matcher matcher = pattern.matcher(dateTime);
-    String datetimeStr = null;
+    Matcher matcher = pattern.matcher(dateTimeStr);
+    String datetimeStrResult = null;
     if (matcher.find()) {
-      datetimeStr = matcher.group();
+      datetimeStrResult = matcher.group();
+    } else {
+      datetimeStrResult = dateStr + " 00:00";
+      log.warn(title + " : need one more check time info");
     }
 
-    return TimeUtil.convertToLocalDateTime(datetimeStr);
+    return TimeUtil.convertToLocalDateTime(datetimeStrResult);
   }
 
   private void extractTargestHref(Document doc, ArrayList<String> targetUrls) {
