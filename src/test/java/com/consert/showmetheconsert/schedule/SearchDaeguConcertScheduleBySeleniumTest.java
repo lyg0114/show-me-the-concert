@@ -16,19 +16,19 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
  * @since : 2023/05/10
  */
 @DataJpaTest
-class SearchDaeguConcertScheduleTest {
+class SearchDaeguConcertScheduleBySeleniumTest {
 
   @Autowired
   private ConcertInfoRepository concertInfoRepository;
 
-  private SearchDaeguConcertSchedule getSchedule() {
-    return new SearchDaeguConcertSchedule(new GlobalVar(),
+  private SearchDaeguConcertScheduleBySelenium getSchedule() {
+    return new SearchDaeguConcertScheduleBySelenium(new GlobalVar(),
         new DummyWebDriver(), concertInfoRepository);
   }
 
   @Test
   public void test_extractShowId_daegu_concert_Url() {
-    SearchDaeguConcertSchedule schedule = getSchedule();
+    SearchDaeguConcertScheduleBySelenium schedule = getSchedule();
     String targetUrl = "https://www.daeguconcerthouse.or.kr/index.do?menu_link=%2Ffront%2Fschedule%2FconcertScheduleDetailView.do&con_id=SC_00000000000000001274&menu_id=00000014&year=2023";
     String result = schedule.extractShowId(targetUrl);
     assertEquals("SC_00000000000000001274", result);
@@ -36,7 +36,7 @@ class SearchDaeguConcertScheduleTest {
 
   @Test
   public void fail_test_extractShowId_daegu_concert_Url() {
-    SearchDaeguConcertSchedule schedule = getSchedule();
+    SearchDaeguConcertScheduleBySelenium schedule = getSchedule();
     String targetUrl = "https://www.daeguconcerthouse.or.kr/index.do";
     assertNull(schedule.extractShowId(targetUrl));
   }

@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class SearchDaeguConcertSchedule {
+public class SearchDaeguConcertScheduleBySelenium {
 
   public static final String RETURN_BTN_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[1]/ul/li[3]/a";
   public static final String COMPARE_STR = "javascript:fn_view('SC";
