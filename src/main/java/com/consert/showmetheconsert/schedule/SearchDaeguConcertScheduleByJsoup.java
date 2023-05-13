@@ -1,12 +1,14 @@
 package com.consert.showmetheconsert.schedule;
 
 import com.consert.showmetheconsert.conf.GlobalVar;
+import com.consert.showmetheconsert.model.dto.daeguconcert.DaeguConcertDto;
 import com.consert.showmetheconsert.model.entity.ConcertInfo;
 import com.consert.showmetheconsert.repository.ConcertInfoRepository;
 import com.consert.showmetheconsert.util.TimeUtil;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.RequiredArgsConstructor;
@@ -48,35 +50,49 @@ public class SearchDaeguConcertScheduleByJsoup implements SearchDaeguConcertSche
       throw new RuntimeException("url connect fail");
     }
 
-    ArrayList<String> showIds = new ArrayList<>();
-    extractTargestHref(doc, showIds);
-    for (String showId : showIds) {
+    ArrayList<DaeguConcertDto> daeguConcertDtos = new ArrayList<>();
+    extractTargestHref(doc, daeguConcertDtos);
+    for (DaeguConcertDto daeguConcertDto : daeguConcertDtos) {
       String host = "https://www.daeguconcerthouse.or.kr/index.do?menu_link=%2Ffront%2Fschedule%2FconcertScheduleDetailView.do&menu_id=00000014&year=2023&con_id=";
-      String targetHost = host + showId;
+      String targetHost = host + daeguConcertDto.getShowId();
       Document detailDoc = null;
       try {
         detailDoc = Jsoup.connect(targetHost).get();
-        extractData(detailDoc, targetHost, showId);
+        extractData(detailDoc, targetHost, daeguConcertDto);
       } catch (IOException e) {
         e.printStackTrace();
       }
     }
   }
 
-  private void extractData(Document detailDoc, String targetHost, String showId) {
+  private void extractData(Document detailDoc, String targetHost, DaeguConcertDto daeguConcertDto) {
     ConcertInfo info = ConcertInfo.builder()
         .url(targetHost)
-        .title(detailDoc.selectXpath(CONCERT_TITLE_XPATH).html())
+        .title(daeguConcertDto.getTitle())
         .place(detailDoc.selectXpath(CONCERT_PLACE_XPATH).html())
         .concertDateTime(calculateConcertDate(
             detailDoc.selectXpath(CONCERT_TITLE_XPATH).html(),
             detailDoc.selectXpath(CONCERT_DATE_XPATH).html(),
             detailDoc.selectXpath(CONCERT_TIME_XPATH).html()))
         .concertHallTag(GlobalVar.TAG_DAEGUCONCERT_HOUSE)
-        .showId(showId)
+        .showId(daeguConcertDto.getShowId())
         .build();
-//    saveInfo(info);
+    saveInfo(info);
     log.info(info.toString());
+  }
+
+  private void saveInfo(ConcertInfo info) {
+    if (info.getShowId() == null) {
+      return;
+    }
+
+    Optional<ConcertInfo> savedInfo = concertInfoRepo
+        .findConcertInfoByShowId(info.getShowId());
+    if (savedInfo.isPresent()) {
+      savedInfo.ifPresent(i -> i.updateConcertInfo(info));
+    } else {
+      concertInfoRepo.save(info);
+    }
   }
 
   public LocalDateTime calculateConcertDate(String title, String dateStr, String timeStr) {
@@ -109,15 +125,16 @@ public class SearchDaeguConcertScheduleByJsoup implements SearchDaeguConcertSche
     return TimeUtil.convertToLocalDateTime(datetimeStr);
   }
 
-  private void extractTargestHref(Document doc, ArrayList<String> showId) {
+  private void extractTargestHref(Document doc, ArrayList<DaeguConcertDto> daeguConcertDtos) {
     Elements titles = doc.select("a");
     for (Element title : titles) {
       Elements href = title.getElementsByAttribute("href");
       if (href.size() > 0) {
         String link = href.get(0).attributes().get("href");
         if (link.contains(COMPARE_STR)) {
-          String[] split = link.split("'");
-          showId.add(split[1]);
+          String[] showIds = link.split("'");
+          String titleStr = title.html();
+          daeguConcertDtos.add(new DaeguConcertDto(showIds[1], titleStr));
         }
       }
     }
