@@ -34,6 +34,7 @@ public class SearchDaeguConcertScheduleByJsoup implements SearchDaeguConcertSche
   public static final String CONCERT_PLACE_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/ul/li[1]/div";
   public static final String CONCERT_DATE_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/ul/li[2]/div";
   public static final String CONCERT_TIME_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[2]/div[1]/div[2]/ul/li[3]/div";
+  public static final String HOST_URL = "https://www.daeguconcerthouse.or.kr/index.do?menu_link=%2Ffront%2Fschedule%2FconcertScheduleDetailView.do&menu_id=00000014&year=2023&con_id=";
   public static final String REG_EXPRESSION_DATE = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}";
 
   private final GlobalVar global;
@@ -53,8 +54,7 @@ public class SearchDaeguConcertScheduleByJsoup implements SearchDaeguConcertSche
     ArrayList<DaeguConcertDto> daeguConcertDtos = new ArrayList<>();
     extractTargestHref(doc, daeguConcertDtos);
     for (DaeguConcertDto daeguConcertDto : daeguConcertDtos) {
-      String host = "https://www.daeguconcerthouse.or.kr/index.do?menu_link=%2Ffront%2Fschedule%2FconcertScheduleDetailView.do&menu_id=00000014&year=2023&con_id=";
-      String targetHost = host + daeguConcertDto.getShowId();
+      String targetHost = HOST_URL + daeguConcertDto.getShowId();
       Document detailDoc = null;
       try {
         detailDoc = Jsoup.connect(targetHost).get();

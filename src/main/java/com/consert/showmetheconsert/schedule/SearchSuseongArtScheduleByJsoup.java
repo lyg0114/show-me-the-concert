@@ -33,6 +33,7 @@ public class SearchSuseongArtScheduleByJsoup implements SearchSuseongArtSchedule
   public static final String CONCERT_PLACE_XPATH = "/html/body/div/section/div/div/div/div/div[1]/div[2]/table/tbody/tr[4]/td[2]";
   public static final String CONCERT_DATE_XPATH = "/html/body/div/section/div/div/div/div/div[1]/div[2]/table/tbody/tr[1]/td[1]";
   public static final String CONCERT_TIME_XPATH = "/html/body/div/section/div/div/div/div/div[1]/div[2]/table/tbody/tr[1]/td[2]";
+  public static final String HOST_URL = "https://www.ssartpia.kr/";
   public static final String REG_EXPRESSION_DATE = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}";
 
   private final GlobalVar global;
@@ -53,8 +54,7 @@ public class SearchSuseongArtScheduleByJsoup implements SearchSuseongArtSchedule
     extractTargestHref(doc, targetUrls);
 
     for (String targetURL : targetUrls) {
-      String host = "https://www.ssartpia.kr/";
-      String targetHost = host + targetURL;
+      String targetHost = HOST_URL + targetURL;
       Document detailDoc = null;
       try {
         detailDoc = Jsoup.connect(targetHost).get();
