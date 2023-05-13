@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Slf4j
 @RequiredArgsConstructor
-@Component
+//@Component
 public class SearchDaeguConcertScheduleBySelenium implements SearchDaeguConcertScheduleInterface {
 
   public static final String RETURN_BTN_XPATH = "/html/body/div[2]/div[3]/div/div/div/div[2]/div[1]/ul/li[3]/a";
