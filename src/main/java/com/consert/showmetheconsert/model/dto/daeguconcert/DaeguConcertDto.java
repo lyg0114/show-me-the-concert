@@ -15,4 +15,12 @@ import lombok.NoArgsConstructor;
 public class DaeguConcertDto {
   private String showId;
   private String title;
+
+  @Override
+  public String toString() {
+    return "DaeguConcertDto{" +
+        "showId='" + showId + '\'' +
+        ", title='" + title + '\'' +
+        '}';
+  }
 }
