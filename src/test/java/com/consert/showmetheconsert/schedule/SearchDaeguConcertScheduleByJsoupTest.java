@@ -1,7 +1,9 @@
 package com.consert.showmetheconsert.schedule;
 
 import com.consert.showmetheconsert.conf.GlobalVar;
+import com.consert.showmetheconsert.model.dto.daeguconcert.DaeguConcertDto;
 import com.consert.showmetheconsert.repository.ConcertInfoRepository;
+import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +29,12 @@ class SearchDaeguConcertScheduleByJsoupTest {
   public void test_searchData() {
     SearchDaeguConcertScheduleByJsoup schedule = getSchedule();
     schedule.searchData();
+  }
+
+  @Test
+  public void test_extractTargestHref() {
+    SearchDaeguConcertScheduleByJsoup schedule = getSchedule();
+    ArrayList<DaeguConcertDto> daeguConcertDtos = new ArrayList<>();
   }
 
 }

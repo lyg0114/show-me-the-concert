@@ -125,7 +125,7 @@ public class SearchDaeguConcertScheduleByJsoup implements SearchDaeguConcertSche
     return TimeUtil.convertToLocalDateTime(datetimeStr);
   }
 
-  private void extractTargestHref(Document doc, ArrayList<DaeguConcertDto> daeguConcertDtos) {
+  public void extractTargestHref(Document doc, ArrayList<DaeguConcertDto> daeguConcertDtos) {
     Elements titles = doc.select("a");
     for (Element title : titles) {
       Elements href = title.getElementsByAttribute("href");
@@ -138,6 +138,5 @@ public class SearchDaeguConcertScheduleByJsoup implements SearchDaeguConcertSche
         }
       }
     }
-
   }
 }
