@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.consert.showmetheconsert.conf.GlobalVar;
 import com.consert.showmetheconsert.repository.ConcertInfoRepository;
-import com.consert.showmetheconsert.schedule.SearchDaeguConcertScheduleBySelenium;
+import com.consert.showmetheconsert.schedule.selenium.SearchDaeguConcertScheduleBySelenium;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

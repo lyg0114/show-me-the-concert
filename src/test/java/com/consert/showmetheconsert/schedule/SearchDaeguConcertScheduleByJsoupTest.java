@@ -3,6 +3,7 @@ package com.consert.showmetheconsert.schedule;
 import com.consert.showmetheconsert.conf.GlobalVar;
 import com.consert.showmetheconsert.model.dto.daeguconcert.DaeguConcertDto;
 import com.consert.showmetheconsert.repository.ConcertInfoRepository;
+import com.consert.showmetheconsert.schedule.jsoup.SearchDaeguConcertScheduleByJsoup;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

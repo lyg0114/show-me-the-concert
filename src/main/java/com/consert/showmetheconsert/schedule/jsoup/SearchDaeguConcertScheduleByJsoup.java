@@ -1,9 +1,10 @@
-package com.consert.showmetheconsert.schedule;
+package com.consert.showmetheconsert.schedule.jsoup;
 
 import com.consert.showmetheconsert.conf.GlobalVar;
 import com.consert.showmetheconsert.model.dto.daeguconcert.DaeguConcertDto;
 import com.consert.showmetheconsert.model.entity.ConcertInfo;
 import com.consert.showmetheconsert.repository.ConcertInfoRepository;
+import com.consert.showmetheconsert.schedule.SearchDaeguConcertScheduleInterface;
 import com.consert.showmetheconsert.util.TimeUtil;
 import java.io.IOException;
 import java.time.LocalDateTime;

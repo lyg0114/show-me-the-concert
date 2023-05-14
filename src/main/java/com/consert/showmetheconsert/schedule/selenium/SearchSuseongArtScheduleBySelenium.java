@@ -1,21 +1,21 @@
-package com.consert.showmetheconsert.schedule;
+package com.consert.showmetheconsert.schedule.selenium;
 
 import com.consert.showmetheconsert.conf.GlobalVar;
 import com.consert.showmetheconsert.model.entity.ConcertInfo;
 import com.consert.showmetheconsert.repository.ConcertInfoRepository;
+import com.consert.showmetheconsert.schedule.SearchSuseongArtScheduleInterface;
 import com.consert.showmetheconsert.util.TimeUtil;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,57 +26,61 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Slf4j
 @RequiredArgsConstructor
-@Component
-public class SearchSuseongArtScheduleByJsoup implements SearchSuseongArtScheduleInterface {
+//@Component
+public class SearchSuseongArtScheduleBySelenium implements SearchSuseongArtScheduleInterface {
 
+  public static final String RETURN_BTN_XPATH = "/html/body/div/section/div/div/div/div/div[3]/a";
+  public static final String COMPARE_STR = "&no=";
   public static final String CONCERT_TITLE_XPATH = "/html/body/div/div[3]/div[2]/div/h4";
   public static final String CONCERT_PLACE_XPATH = "/html/body/div/section/div/div/div/div/div[1]/div[2]/table/tbody/tr[4]/td[2]";
   public static final String CONCERT_DATE_XPATH = "/html/body/div/section/div/div/div/div/div[1]/div[2]/table/tbody/tr[1]/td[1]";
   public static final String CONCERT_TIME_XPATH = "/html/body/div/section/div/div/div/div/div[1]/div[2]/table/tbody/tr[1]/td[2]";
-  public static final String HOST_URL = "https://www.ssartpia.kr/";
   public static final String REG_EXPRESSION_DATE = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}";
 
   private final GlobalVar global;
+  private final WebDriver driver;
   private final ConcertInfoRepository concertInfoRepo;
 
   @Override
   public void searchData() {
-    Document doc = null;
-    try {
-      doc = Jsoup.connect(global.getSuseongArtUrl()).get();
-    } catch (IOException ex) {
-      log.error(ex.getMessage());
-      ex.printStackTrace();
-      throw new RuntimeException("url connect fail");
-    }
+    driver.get(global.getSuseongArtUrl());
+    List<String> targets = new ArrayList<>();
+    extractTargestHref(targets);
+    extracted(targets);
+  }
 
-    ArrayList<String> targetUrls = new ArrayList<>();
-    extractTargestHref(doc, targetUrls);
-
-    for (String targetURL : targetUrls) {
-      String targetHost = HOST_URL + targetURL;
-      Document detailDoc = null;
-      try {
-        detailDoc = Jsoup.connect(targetHost).get();
-        extractData(detailDoc, targetHost);
-      } catch (IOException e) {
-        e.printStackTrace();
+  private void extractTargestHref(List<String> targets) {
+    List<WebElement> links = driver.findElements(By.tagName("a"));
+    links.forEach(l -> {
+      String href = l.getAttribute("href");
+      if (href != null && href.contains(COMPARE_STR)) {
+        targets.add(href);
       }
+    });
+  }
+
+  private void extracted(List<String> URLs) {
+    for (String url : URLs) {
+      driver.get(url);
+      extractData();
+      TimeUtil.sleep(1500);
+      driver.findElement(By.xpath(RETURN_BTN_XPATH)).click();
+      TimeUtil.sleep(1500);
     }
   }
 
   @Transactional
-  public void extractData(Document detailDoc, String targetHost) {
+  public void extractData() {
     ConcertInfo info = ConcertInfo.builder()
-        .url(targetHost)
-        .title(detailDoc.selectXpath(CONCERT_TITLE_XPATH).html())
-        .place(detailDoc.selectXpath(CONCERT_PLACE_XPATH).html())
+        .url(driver.getCurrentUrl())
+        .title(driver.findElement(By.xpath(CONCERT_TITLE_XPATH)).getText())
+        .place(driver.findElement(By.xpath(CONCERT_PLACE_XPATH)).getText())
         .concertDateTime(calculateConcertDate(
-            detailDoc.selectXpath(CONCERT_TITLE_XPATH).html(),
-            detailDoc.selectXpath(CONCERT_DATE_XPATH).html(),
-            detailDoc.selectXpath(CONCERT_TIME_XPATH).html()))
+            driver.findElement(By.xpath(CONCERT_TITLE_XPATH)).getText(),
+            driver.findElement(By.xpath(CONCERT_DATE_XPATH)).getText(),
+            driver.findElement(By.xpath(CONCERT_TIME_XPATH)).getText()))
         .concertHallTag(GlobalVar.TAG_SUSEONGART)
-        .showId(extractShowId(targetHost))
+        .showId(extractShowId(driver.getCurrentUrl()))
         .build();
     saveInfo(info);
     log.info(info.toString());
@@ -118,8 +122,7 @@ public class SearchSuseongArtScheduleByJsoup implements SearchSuseongArtSchedule
       sb.append("-");
       sb.append(dateStr.split("\\.")[2]);
       dateStr = sb.toString();
-
-      localDateTime = getLocalDateTime(title, dateStr, timeStr);
+      localDateTime = getLocalDateTime(dateStr, timeStr);
     } catch (RuntimeException ex) {
       log.error(title + " : dateTimeStr has null or whitespace");
       ex.printStackTrace();
@@ -128,36 +131,20 @@ public class SearchSuseongArtScheduleByJsoup implements SearchSuseongArtSchedule
     return localDateTime;
   }
 
-  private LocalDateTime getLocalDateTime(String title, String dateStr, String timeStr) {
+  private LocalDateTime getLocalDateTime(String dateStr, String timeStr) {
     StringBuilder sb = new StringBuilder();
     sb.append(dateStr);
     sb.append(" ");
     sb.append(timeStr);
-    String dateTimeStr = sb.toString();
+    String dateTime = sb.toString();
 
     Pattern pattern = Pattern.compile(REG_EXPRESSION_DATE);
-    Matcher matcher = pattern.matcher(dateTimeStr);
-    String datetimeStrResult = null;
+    Matcher matcher = pattern.matcher(dateTime);
+    String datetimeStr = null;
     if (matcher.find()) {
-      datetimeStrResult = matcher.group();
-    } else {
-      datetimeStrResult = dateStr + " 00:00";
-      log.warn(title + " : need one more check time info");
+      datetimeStr = matcher.group();
     }
 
-    return TimeUtil.convertToLocalDateTime(datetimeStrResult);
-  }
-
-  private void extractTargestHref(Document doc, ArrayList<String> targetUrls) {
-    Elements titles = doc.select("a");
-    for (Element title : titles) {
-      Elements href = title.getElementsByAttribute("href");
-      if (href.size() > 0) {
-        String link = href.get(0).attributes().get("href");
-        if (link.contains("&no=")) {
-          targetUrls.add(link);
-        }
-      }
-    }
+    return TimeUtil.convertToLocalDateTime(datetimeStr);
   }
 }

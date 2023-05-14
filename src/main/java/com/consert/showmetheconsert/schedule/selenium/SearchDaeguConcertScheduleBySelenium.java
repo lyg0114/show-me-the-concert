@@ -1,8 +1,9 @@
-package com.consert.showmetheconsert.schedule;
+package com.consert.showmetheconsert.schedule.selenium;
 
 import com.consert.showmetheconsert.conf.GlobalVar;
 import com.consert.showmetheconsert.model.entity.ConcertInfo;
 import com.consert.showmetheconsert.repository.ConcertInfoRepository;
+import com.consert.showmetheconsert.schedule.SearchDaeguConcertScheduleInterface;
 import com.consert.showmetheconsert.util.TimeUtil;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
