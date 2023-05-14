@@ -49,6 +49,33 @@ public class SearchDaeguConcertScheduleByJsoup implements SearchDaeguConcertSche
     extractDatas(daeguConcertDtos);
   }
 
+  private Document getDocument() {
+    Document doc = null;
+    try {
+      doc = Jsoup.connect(global.getDaeguConcertHouseUrl()).get();
+    } catch (IOException ex) {
+      log.error(ex.getMessage());
+      ex.printStackTrace();
+      throw new RuntimeException("url connect fail");
+    }
+    return doc;
+  }
+
+  public void extractTargestHref(Document doc, ArrayList<DaeguConcertDto> daeguConcertDtos) {
+    Elements titles = doc.select("a");
+    for (Element title : titles) {
+      Elements href = title.getElementsByAttribute("href");
+      if (href.size() > 0) {
+        String link = href.get(0).attributes().get("href");
+        if (link.contains(COMPARE_STR)) {
+          String[] showIds = link.split("'");
+          String titleStr = title.html();
+          daeguConcertDtos.add(new DaeguConcertDto(showIds[1], titleStr));
+        }
+      }
+    }
+  }
+
   private void extractDatas(ArrayList<DaeguConcertDto> daeguConcertDtos) {
     for (DaeguConcertDto daeguConcertDto : daeguConcertDtos) {
       String targetHost = HOST_URL + daeguConcertDto.getShowId();
@@ -60,18 +87,6 @@ public class SearchDaeguConcertScheduleByJsoup implements SearchDaeguConcertSche
         e.printStackTrace();
       }
     }
-  }
-
-  private Document getDocument() {
-    Document doc = null;
-    try {
-      doc = Jsoup.connect(global.getDaeguConcertHouseUrl()).get();
-    } catch (IOException ex) {
-      log.error(ex.getMessage());
-      ex.printStackTrace();
-      throw new RuntimeException("url connect fail");
-    }
-    return doc;
   }
 
   private void extractData(Document detailDoc, String targetHost, DaeguConcertDto daeguConcertDto) {
@@ -107,45 +122,25 @@ public class SearchDaeguConcertScheduleByJsoup implements SearchDaeguConcertSche
   public LocalDateTime calculateConcertDate(String title, String dateStr, String timeStr) {
     LocalDateTime localDateTime = null;
     try {
-      localDateTime = getLocalDateTime(title, dateStr, timeStr);
+      StringBuilder sb = new StringBuilder();
+      sb.append(dateStr);
+      sb.append(" ");
+      sb.append(timeStr);
+      String dateTime = sb.toString();
+
+      Pattern pattern = Pattern.compile(REG_EXPRESSION_DATE);
+      Matcher matcher = pattern.matcher(dateTime);
+      String datetimeStr = null;
+      if (matcher.find()) {
+        datetimeStr = matcher.group();
+      } else {
+        log.warn(title + " : need one more check time info");
+      }
+      return TimeUtil.convertToLocalDateTime(datetimeStr);
     } catch (RuntimeException ex) {
       log.error(title + " : dateTimeStr has null or whitespace");
       ex.printStackTrace();
-    }
-    return localDateTime;
-  }
-
-  private LocalDateTime getLocalDateTime(String title, String dateStr, String timeStr) {
-    StringBuilder sb = new StringBuilder();
-    sb.append(dateStr);
-    sb.append(" ");
-    sb.append(timeStr);
-    String dateTime = sb.toString();
-
-    Pattern pattern = Pattern.compile(REG_EXPRESSION_DATE);
-    Matcher matcher = pattern.matcher(dateTime);
-    String datetimeStr = null;
-    if (matcher.find()) {
-      datetimeStr = matcher.group();
-    } else {
-      log.warn(title + " : need one more check time info");
-    }
-
-    return TimeUtil.convertToLocalDateTime(datetimeStr);
-  }
-
-  public void extractTargestHref(Document doc, ArrayList<DaeguConcertDto> daeguConcertDtos) {
-    Elements titles = doc.select("a");
-    for (Element title : titles) {
-      Elements href = title.getElementsByAttribute("href");
-      if (href.size() > 0) {
-        String link = href.get(0).attributes().get("href");
-        if (link.contains(COMPARE_STR)) {
-          String[] showIds = link.split("'");
-          String titleStr = title.html();
-          daeguConcertDtos.add(new DaeguConcertDto(showIds[1], titleStr));
-        }
-      }
+      return localDateTime;
     }
   }
 }
