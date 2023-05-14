@@ -18,13 +18,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SpringConfig {
 
-  @Bean
+//  @Bean
   public WebDriver webDriver() {
     System.setProperty(GlobalVar.DRIVER_NAME, GlobalVar.DRIVER_PATH);
     return new ChromeDriver(chromeOptions());
   }
 
-  @Bean
+//  @Bean
   public ChromeOptions chromeOptions() {
     return new ChromeOptions()
         .addArguments("--remote-allow-origins=*")
