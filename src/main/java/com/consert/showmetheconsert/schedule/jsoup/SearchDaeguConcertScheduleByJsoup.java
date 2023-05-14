@@ -43,17 +43,13 @@ public class SearchDaeguConcertScheduleByJsoup implements SearchDaeguConcertSche
 
   @Override
   public void searchData() {
-    Document doc = null;
-    try {
-      doc = Jsoup.connect(global.getDaeguConcertHouseUrl()).get();
-    } catch (IOException ex) {
-      log.error(ex.getMessage());
-      ex.printStackTrace();
-      throw new RuntimeException("url connect fail");
-    }
-
     ArrayList<DaeguConcertDto> daeguConcertDtos = new ArrayList<>();
+    Document doc = getDocument();
     extractTargestHref(doc, daeguConcertDtos);
+    extractDatas(daeguConcertDtos);
+  }
+
+  private void extractDatas(ArrayList<DaeguConcertDto> daeguConcertDtos) {
     for (DaeguConcertDto daeguConcertDto : daeguConcertDtos) {
       String targetHost = HOST_URL + daeguConcertDto.getShowId();
       Document detailDoc = null;
@@ -64,6 +60,18 @@ public class SearchDaeguConcertScheduleByJsoup implements SearchDaeguConcertSche
         e.printStackTrace();
       }
     }
+  }
+
+  private Document getDocument() {
+    Document doc = null;
+    try {
+      doc = Jsoup.connect(global.getDaeguConcertHouseUrl()).get();
+    } catch (IOException ex) {
+      log.error(ex.getMessage());
+      ex.printStackTrace();
+      throw new RuntimeException("url connect fail");
+    }
+    return doc;
   }
 
   private void extractData(Document detailDoc, String targetHost, DaeguConcertDto daeguConcertDto) {
