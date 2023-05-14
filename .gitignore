@@ -38,4 +38,4 @@ out/
 
 
 /src/main/resources/sample/
-src/main/resources/applicativon.properties
+/src/main/resources/application.properties
