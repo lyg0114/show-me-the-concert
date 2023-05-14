@@ -1,13 +1,12 @@
 package com.consert.showmetheconsert.schedule;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.consert.showmetheconsert.conf.GlobalVar;
 import com.consert.showmetheconsert.model.dto.daeguconcert.DaeguConcertDto;
 import com.consert.showmetheconsert.repository.ConcertInfoRepository;
 import com.consert.showmetheconsert.schedule.jsoup.SearchDaeguConcertScheduleByJsoup;
-import java.io.IOException;
 import java.util.ArrayList;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +24,8 @@ class SearchDaeguConcertScheduleByJsoupTest {
   private static final Logger log = LoggerFactory
       .getLogger(SearchDaeguConcertScheduleByJsoupTest.class);
 
+  private final String TEST_SHOW_ID = "sc_";
+
   @Autowired
   private GlobalVar global;
   @Autowired
@@ -32,18 +33,6 @@ class SearchDaeguConcertScheduleByJsoupTest {
 
   private SearchDaeguConcertScheduleByJsoup getSchedule() {
     return new SearchDaeguConcertScheduleByJsoup(global, concertInfoRepo);
-  }
-
-  private Document getDocument() {
-    Document doc = null;
-    try {
-      doc = Jsoup.connect(global.getDaeguConcertHouseUrl()).get();
-    } catch (IOException ex) {
-      log.error(ex.getMessage());
-      ex.printStackTrace();
-      throw new RuntimeException("url connect fail");
-    }
-    return doc;
   }
 
   @Test
@@ -59,7 +48,9 @@ class SearchDaeguConcertScheduleByJsoupTest {
     schedule.extractTargestHref(daeguConcertDtos);
 
     for (DaeguConcertDto daeguConcertDto : daeguConcertDtos) {
-      log.info(daeguConcertDto.toString());
+      boolean result = daeguConcertDto.getShowId()
+          .contains(TEST_SHOW_ID);
+      assertTrue(result);
     }
   }
 }
