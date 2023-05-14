@@ -42,6 +42,26 @@ public class SearchSuseongArtScheduleByJsoup implements SearchSuseongArtSchedule
 
   @Override
   public void searchData() {
+    ArrayList<String> targetUrls = new ArrayList<>();
+    extractTargestHref(targetUrls);
+    extractInfos(targetUrls);
+  }
+
+  private void extractTargestHref(ArrayList<String> targetUrls) {
+    Document doc = getSuseongArtDocument();
+    Elements titles = doc.select("a");
+    for (Element title : titles) {
+      Elements href = title.getElementsByAttribute("href");
+      if (href.size() > 0) {
+        String link = href.get(0).attributes().get("href");
+        if (link.contains("&no=")) {
+          targetUrls.add(link);
+        }
+      }
+    }
+  }
+
+  private Document getSuseongArtDocument() {
     Document doc = null;
     try {
       doc = Jsoup.connect(global.getSuseongArtUrl()).get();
@@ -50,10 +70,10 @@ public class SearchSuseongArtScheduleByJsoup implements SearchSuseongArtSchedule
       ex.printStackTrace();
       throw new RuntimeException("url connect fail");
     }
+    return doc;
+  }
 
-    ArrayList<String> targetUrls = new ArrayList<>();
-    extractTargestHref(doc, targetUrls);
-
+  private void extractInfos(ArrayList<String> targetUrls) {
     for (String targetURL : targetUrls) {
       String targetHost = HOST_URL + targetURL;
       Document detailDoc = null;
@@ -83,6 +103,18 @@ public class SearchSuseongArtScheduleByJsoup implements SearchSuseongArtSchedule
     log.info(info.toString());
   }
 
+  public String extractShowId(String targetUrl) {
+    String result = null;
+    try {
+      result = targetUrl.split("&")[2]
+          .split("=")[1];
+    } catch (RuntimeException ex) {
+      log.error("check the targetUrl : " + targetUrl);
+      ex.printStackTrace();
+    }
+    return result;
+  }
+
   private void saveInfo(ConcertInfo info) {
     if (info.getShowId() == null) {
       return;
@@ -95,18 +127,6 @@ public class SearchSuseongArtScheduleByJsoup implements SearchSuseongArtSchedule
     } else {
       concertInfoRepo.save(info);
     }
-  }
-
-  public String extractShowId(String targetUrl) {
-    String result = null;
-    try {
-      result = targetUrl.split("&")[2]
-          .split("=")[1];
-    } catch (RuntimeException ex) {
-      log.error("check the targetUrl : " + targetUrl);
-      ex.printStackTrace();
-    }
-    return result;
   }
 
   public LocalDateTime calculateConcertDate(String title, String dateStr, String timeStr) {
@@ -145,20 +165,6 @@ public class SearchSuseongArtScheduleByJsoup implements SearchSuseongArtSchedule
       datetimeStrResult = dateStr + " 00:00";
       log.warn(title + " : need one more check time info");
     }
-
     return TimeUtil.convertToLocalDateTime(datetimeStrResult);
-  }
-
-  private void extractTargestHref(Document doc, ArrayList<String> targetUrls) {
-    Elements titles = doc.select("a");
-    for (Element title : titles) {
-      Elements href = title.getElementsByAttribute("href");
-      if (href.size() > 0) {
-        String link = href.get(0).attributes().get("href");
-        if (link.contains("&no=")) {
-          targetUrls.add(link);
-        }
-      }
-    }
   }
 }

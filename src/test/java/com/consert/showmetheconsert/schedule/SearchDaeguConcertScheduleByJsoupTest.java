@@ -62,6 +62,4 @@ class SearchDaeguConcertScheduleByJsoupTest {
       log.info(daeguConcertDto.toString());
     }
   }
-
-
 }
