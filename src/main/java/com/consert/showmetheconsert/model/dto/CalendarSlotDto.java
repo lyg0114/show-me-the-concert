@@ -3,6 +3,7 @@ package com.consert.showmetheconsert.model.dto;
 import com.consert.showmetheconsert.model.entity.ConcertInfo;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +26,9 @@ public class CalendarSlotDto {
     infos = new ArrayList<>();
   }
 
-  public LocalTime getStartTimeInfo() {
-    return startTime;
+  public String getStartTimeInfo() {
+    String startTimeStr = startTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+    return startTimeStr.equals("00:00") ? "-" : startTimeStr;
   }
 
   public LocalDateTime getCurrentConcertDateTime() {
