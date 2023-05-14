@@ -44,24 +44,12 @@ public class SearchDaeguConcertScheduleByJsoup implements SearchDaeguConcertSche
   @Override
   public void searchData() {
     ArrayList<DaeguConcertDto> daeguConcertDtos = new ArrayList<>();
-    Document doc = getDocument();
-    extractTargestHref(doc, daeguConcertDtos);
-    extractDatas(daeguConcertDtos);
+    extractTargestHref(daeguConcertDtos);
+    extractInfos(daeguConcertDtos);
   }
 
-  private Document getDocument() {
-    Document doc = null;
-    try {
-      doc = Jsoup.connect(global.getDaeguConcertHouseUrl()).get();
-    } catch (IOException ex) {
-      log.error(ex.getMessage());
-      ex.printStackTrace();
-      throw new RuntimeException("url connect fail");
-    }
-    return doc;
-  }
-
-  public void extractTargestHref(Document doc, ArrayList<DaeguConcertDto> daeguConcertDtos) {
+  public void extractTargestHref(ArrayList<DaeguConcertDto> daeguConcertDtos) {
+    Document doc = getDaeguConcertDocument();
     Elements titles = doc.select("a");
     for (Element title : titles) {
       Elements href = title.getElementsByAttribute("href");
@@ -76,20 +64,32 @@ public class SearchDaeguConcertScheduleByJsoup implements SearchDaeguConcertSche
     }
   }
 
-  private void extractDatas(ArrayList<DaeguConcertDto> daeguConcertDtos) {
+  private Document getDaeguConcertDocument() {
+    Document doc = null;
+    try {
+      doc = Jsoup.connect(global.getDaeguConcertHouseUrl()).get();
+    } catch (IOException ex) {
+      log.error(ex.getMessage());
+      ex.printStackTrace();
+      throw new RuntimeException("url connect fail");
+    }
+    return doc;
+  }
+
+  public void extractInfos(ArrayList<DaeguConcertDto> daeguConcertDtos) {
     for (DaeguConcertDto daeguConcertDto : daeguConcertDtos) {
       String targetHost = HOST_URL + daeguConcertDto.getShowId();
       Document detailDoc = null;
       try {
         detailDoc = Jsoup.connect(targetHost).get();
-        extractData(detailDoc, targetHost, daeguConcertDto);
+        extractInfo(detailDoc, targetHost, daeguConcertDto);
       } catch (IOException e) {
         e.printStackTrace();
       }
     }
   }
 
-  private void extractData(Document detailDoc, String targetHost, DaeguConcertDto daeguConcertDto) {
+  private void extractInfo(Document detailDoc, String targetHost, DaeguConcertDto daeguConcertDto) {
     ConcertInfo info = ConcertInfo.builder()
         .url(targetHost)
         .title(daeguConcertDto.getTitle())

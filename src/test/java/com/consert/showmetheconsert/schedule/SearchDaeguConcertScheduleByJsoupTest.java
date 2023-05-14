@@ -54,11 +54,9 @@ class SearchDaeguConcertScheduleByJsoupTest {
 
   @Test
   public void test_extractTargestHref() {
-    Document doc = getDocument();
     SearchDaeguConcertScheduleByJsoup schedule = getSchedule();
     ArrayList<DaeguConcertDto> daeguConcertDtos = new ArrayList<>();
-
-    schedule.extractTargestHref(doc, daeguConcertDtos);
+    schedule.extractTargestHref(daeguConcertDtos);
 
     for (DaeguConcertDto daeguConcertDto : daeguConcertDtos) {
       log.info(daeguConcertDto.toString());
