@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -64,5 +65,9 @@ public class ConcertInfo extends BaseEntity {
     if (newInfo.getUrl() != null) { this.url = newInfo.getUrl(); }
     if (newInfo.getConcertDateTime() != null) { this.concertDateTime = newInfo.getConcertDateTime(); }
     if (newInfo.getConcertHallTag() != null) { this.concertHallTag = newInfo.getConcertHallTag(); }
+  }
+
+  public String getUnEscapeTitle(){
+    return StringEscapeUtils.unescapeHtml4(this.title);
   }
 }
