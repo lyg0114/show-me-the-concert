@@ -45,7 +45,7 @@
           <div th:class="${info.getClassStr()}" th:each="info : ${time.getConcertInfos()}">
             <div>
               <a th:href="${info.getUrl()}" th:target="_blank">
-                <span th:class="concert-title" th:text="${info.getTitle()}"></span>
+                <span th:class="concert-title" th:text="${info.getUnEscapeTitle()}"></span>
               </a>
             </div>
           </div>
