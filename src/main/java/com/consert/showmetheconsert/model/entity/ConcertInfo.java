@@ -68,6 +68,13 @@ public class ConcertInfo extends BaseEntity {
   }
 
   public String getUnEscapeTitle(){
-    return StringEscapeUtils.unescapeHtml4(this.title);
+    return truncateString(StringEscapeUtils.unescapeHtml4(this.title), 10);
+  }
+
+  public String truncateString(String input, int maxLength) {
+    if (input.length() > maxLength) {
+      input = input.substring(0, maxLength) + "...";
+    }
+    return input;
   }
 }
