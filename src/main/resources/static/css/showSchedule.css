@@ -74,9 +74,12 @@ button:last-of-type {
 }
 
 .time-info {
-  background: #b6d5ee;
+  background: #b7daf7;
   border-radius: 5px;
   margin-top: 10px;
+  width: 80px;
+  margin-left: 34px;
+  margin-bottom: 9px;
 }
 
 .concert-title-div {
