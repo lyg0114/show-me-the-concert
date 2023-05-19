@@ -1,102 +1,22 @@
-
-a:hover {
-  text-decoration: none;
-}
-
-td.time-slot {
-  height: 30px;
-}
-
-td.text-center {
-  vertical-align: middle;
-}
-
-td.date-cell:hover {
-  background-color: #f5f5f5;
-}
-
-td.date-cell {
-  cursor: pointer;
-}
-
-.event-info {
-  padding: 5px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  color: #fff;
-}
-
-.event-info .title {
-  font-weight: bold;
-}
-
-.event-info .tag {
-  display: inline-block;
-  margin-top: 5px;
-  padding: 3px 6px;
-  border-radius: 3px;
-  font-size: 12px;
-  font-weight: normal;
-}
-
-.event-info.tag-1 {
-  background-color: #4285f4;
-}
-
-.event-info.tag-2 {
-  background-color: #34a853;
-}
-
-.event-info.tag-3 {
-  background-color: #fbbc05;
-}
-
-.event-info.tag-4 {
-  background-color: #ea4335;
-}
-
-.btn-group {
-  float: right;
-  margin-bottom: 15px;
-}
-
-button {
-  margin-right: 10px;
-}
-
-button:last-of-type {
-  margin-right: 0;
-}
-
-.day-info {
-  border-bottom: 2px solid black;
-  margin-bottom: 5px;
-}
-
-.time-info {
-  background: #b7daf7;
-  border-radius: 5px;
-  margin-top: 10px;
-  width: 80px;
-  margin-left: 34px;
-  margin-bottom: 9px;
-}
-
-.concert-title-div {
-  margin-top: 3px;
-}
-
-.concert-title {
-  color: black;
-}
-
-.TAG-1 {
-  background: #ddbdbd;
-  border-radius: 6px;
-}
-
-.TAG-2 {
-  background: #c8ce97;
-  border-radius: 6px;
-}
+a:hover { text-decoration: none; }
+td.time-slot { height: 30px; }
+td.text-center { vertical-align: middle; }
+td.date-cell:hover { background-color: #f5f5f5; }
+td.date-cell { cursor: pointer; }
+.event-info { padding: 5px; margin-bottom: 10px; font-size: 14px; color: #fff; }
+.event-info .title { font-weight: bold; }
+.event-info .tag { display: inline-block; margin-top: 5px; padding: 3px 6px; border-radius: 3px; font-size: 12px; font-weight: normal; }
+.event-info.tag-1 { background-color: #4285f4; }
+.event-info.tag-2 { background-color: #34a853; }
+.event-info.tag-3 { background-color: #fbbc05; }
+.event-info.tag-4 { background-color: #ea4335; }
+.btn-group { float: right; margin-bottom: 15px; }
+button { margin-right: 10px; }
+button:last-of-type { margin-right: 0; }
+.day-info { border-bottom: 2px solid black; margin-bottom: 5px; }
+.time-info { background: #b7daf7; border-radius: 5px; margin-top: 10px; width: 80px; margin-left: 34px; margin-bottom: 9px; }
+.concert-title-div { margin-top: 3px; }
+.concert-title { color: black; }
+.TAG-1 { background: #ddbdbd; border-radius: 6px; }
+.TAG-2 { background: #c8ce97; border-radius: 6px; }
 
